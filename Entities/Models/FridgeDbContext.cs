@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Metadata;
+﻿using Microsoft.EntityFrameworkCore;
 
 namespace Entities.Models
 {
@@ -79,19 +76,31 @@ namespace Entities.Models
                 entity.Property(e => e.ProductId).HasColumnName("product_id");
 
                 entity.Property(e => e.Quantity).HasColumnName("quantity");
+
+                entity.HasOne(d => d.Fridge)
+                    .WithMany(p => p.FridgeProducts)
+                    .HasForeignKey(d => d.FridgeId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_fridge_products_fridge");
+
+                entity.HasOne(d => d.Product)
+                    .WithMany(p => p.FridgeProducts)
+                    .HasForeignKey(d => d.ProductId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_fridge_products_products");
             });
 
             modelBuilder.Entity<Product>(entity =>
             {
-                entity.HasNoKey();
-
                 entity.ToTable("products");
+
+                entity.Property(e => e.Id)
+                    .ValueGeneratedNever()
+                    .HasColumnName("id");
 
                 entity.Property(e => e.DefaultQuantity).HasColumnName("default_quantity");
 
                 entity.Property(e => e.FridgeId).HasColumnName("fridge_id");
-
-                entity.Property(e => e.Id).HasColumnName("id");
             });
 
             OnModelCreatingPartial(modelBuilder);
