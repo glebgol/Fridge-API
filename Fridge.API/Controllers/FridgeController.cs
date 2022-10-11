@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Contracts.Interfaces;
+using Microsoft.AspNetCore.Mvc;
 
 namespace Fridge.API.Controllers
 {
@@ -6,5 +7,39 @@ namespace Fridge.API.Controllers
     [ApiController]
     public class FridgeController : ControllerBase
     {
+        private readonly IRepositoryManager _repository;
+
+        public FridgeController(IRepositoryManager repository)
+        {
+            _repository = repository;
+        }
+
+        [HttpGet]
+        public IActionResult GetAllFridges()
+        {
+            try
+            {
+                var fridges = _repository.Fridges.GetAllFridges(trackChanges: false);
+                return Ok(fridges);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
+        [HttpGet("{id}/products")]
+        public IActionResult GetAllFridgeProducts(int id)
+        {
+            try
+            {
+                var products = _repository.FridgeProducts.GetAllFridgeProducts(id, trackChanges: false);
+                return Ok(products);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
     }
 }

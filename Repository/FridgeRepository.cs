@@ -8,5 +8,10 @@ namespace Repository
         public FridgeRepository(FridgeDbContext repositoryContext) : base(repositoryContext)
         {
         }
+
+        public IEnumerable<Fridge> GetAllFridges(bool trackChanges)
+        {
+            return FindAll(trackChanges).ToList();
+        }
     }
 }

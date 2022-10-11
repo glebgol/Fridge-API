@@ -100,7 +100,7 @@ namespace Entities.Models
 
                 entity.Property(e => e.DefaultQuantity).HasColumnName("default_quantity");
 
-                entity.Property(e => e.FridgeId).HasColumnName("fridge_id");
+                entity.Property(e => e.Name).HasColumnName("name");
             });
 
             OnModelCreatingPartial(modelBuilder);

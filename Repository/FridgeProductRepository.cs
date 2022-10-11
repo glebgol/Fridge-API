@@ -8,5 +8,10 @@ namespace Repository
         public FridgeProductRepository(FridgeDbContext repositoryContext) : base(repositoryContext)
         {
         }
+
+        public IEnumerable<FridgeProduct> GetAllFridgeProducts(int fridgeId, bool trackChanges)
+        {
+            return FindByCondition(fp => fp.FridgeId == fridgeId, trackChanges).ToList();
+        }
     }
 }
