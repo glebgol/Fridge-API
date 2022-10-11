@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.3.32922.545
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fridge.API", "Fridge.API\Fridge.API.csproj", "{1C202476-42B9-43B3-899A-998103AC0627}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{1C202476-42B9-43B3-899A-998103AC0627}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1C202476-42B9-43B3-899A-998103AC0627}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1C202476-42B9-43B3-899A-998103AC0627}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1C202476-42B9-43B3-899A-998103AC0627}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {4193CD58-6DF4-42B8-BA87-79A1947BB2D7}
+	EndGlobalSection
+EndGlobal
