@@ -9,6 +9,11 @@ namespace Repository
         {
         }
 
+        public void AddFridge(Fridge fridge)
+        {
+            Create(fridge);
+        }
+
         public IEnumerable<Fridge> GetAllFridges(bool trackChanges)
         {
             return FindAll(trackChanges).ToList();

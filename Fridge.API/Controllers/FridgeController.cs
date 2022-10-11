@@ -41,5 +41,19 @@ namespace Fridge.API.Controllers
                 return BadRequest(ex.Message);
             }
         }
+
+        [HttpPost]
+        public IActionResult PostFridge(Entities.Models.Fridge fridge)
+        {
+            try
+            {
+                _repository.Fridges.AddFridge(fridge);
+                return CreatedAtAction(nameof(PostFridge), new { id = fridge.Id }, fridge);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
     }
 }
