@@ -39,7 +39,8 @@ namespace Fridge.API.Controllers
             try
             {
                 var products = _repository.FridgeProducts.GetAllFridgeProducts(id, trackChanges: false);
-                return Ok(products);
+                var productsDto = _mapper.Map<IEnumerable<ProductDto>>(products);
+                return Ok(productsDto);
             }
             catch (Exception ex)
             {
@@ -53,7 +54,8 @@ namespace Fridge.API.Controllers
             try
             {
                 _repository.Fridges.AddFridge(fridge);
-                return CreatedAtAction(nameof(PostFridge), new { id = fridge.Id }, fridge);
+                var fridgeDto = _mapper.Map<FridgeDto>(fridge);
+                return CreatedAtAction(nameof(PostFridge), new { id = fridge.Id }, fridgeDto);
             }
             catch (Exception ex)
             {
