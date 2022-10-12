@@ -5,6 +5,6 @@
         public int Id { get; set; }
         public string Name { get; set; } = null!;
         public string? OwnerName { get; set; }
-        public int ModelName { get; set; }
+        public int ModelId { get; set; }
     }
 }

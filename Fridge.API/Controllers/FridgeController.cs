@@ -1,4 +1,6 @@
-﻿using Contracts.Interfaces;
+﻿using AutoMapper;
+using Contracts.Interfaces;
+using Entities.DataTransferObjects;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Fridge.API.Controllers
@@ -8,10 +10,12 @@ namespace Fridge.API.Controllers
     public class FridgeController : ControllerBase
     {
         private readonly IRepositoryManager _repository;
+        private readonly IMapper _mapper;
 
-        public FridgeController(IRepositoryManager repository)
+        public FridgeController(IRepositoryManager repository, IMapper mapper)
         {
             _repository = repository;
+            _mapper = mapper;
         }
 
         [HttpGet]
@@ -20,7 +24,8 @@ namespace Fridge.API.Controllers
             try
             {
                 var fridges = _repository.Fridges.GetAllFridges(trackChanges: false);
-                return Ok(fridges);
+                var fridgesDto = _mapper.Map<IEnumerable<FridgeDto>>(fridges);
+                return Ok(fridgesDto);
             }
             catch (Exception ex)
             {
