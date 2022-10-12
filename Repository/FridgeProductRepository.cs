@@ -9,7 +9,7 @@ namespace Repository
         {
         }
 
-        public IEnumerable<FridgeProduct> GetAllFridgeProducts(int fridgeId, bool trackChanges)
+        public IEnumerable<FridgeProduct> GetFridgeProducts(int fridgeId, bool trackChanges)
         {
             return FindByCondition(fp => fp.FridgeId == fridgeId, trackChanges).ToList();
         }

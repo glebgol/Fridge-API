@@ -4,6 +4,6 @@ namespace Contracts.Interfaces
 {
     public interface IFridgeProductRepository
     {
-        IEnumerable<FridgeProduct> GetAllFridgeProducts(int fridgeId, bool trackChanges);
+        IEnumerable<FridgeProduct> GetFridgeProducts(int fridgeId, bool trackChanges);
     }
 }

@@ -33,21 +33,6 @@ namespace Fridge.API.Controllers
             }
         }
 
-        [HttpGet("{id}/products")]
-        public IActionResult GetAllFridgeProducts(int id)
-        {
-            try
-            {
-                var products = _repository.FridgeProducts.GetAllFridgeProducts(id, trackChanges: false);
-                var productsDto = _mapper.Map<IEnumerable<ProductDto>>(products);
-                return Ok(productsDto);
-            }
-            catch (Exception ex)
-            {
-                return BadRequest(ex.Message);
-            }
-        }
-
         [HttpPost]
         public IActionResult PostFridge(Entities.Models.Fridge fridge)
         {
