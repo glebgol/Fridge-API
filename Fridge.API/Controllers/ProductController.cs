@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Fridge.API.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/products")]
     [ApiController]
     public class ProductController : ControllerBase
     {
