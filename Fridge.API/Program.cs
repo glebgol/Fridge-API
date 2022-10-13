@@ -1,6 +1,8 @@
 using Contracts.Interfaces;
 using Entities.Models;
+using LoggerService_;
 using Repository;
+
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -12,7 +14,7 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddDbContext<FridgeDbContext>();
-
+builder.Services.AddScoped<ILoggerManager, LoggerManager>();
 
 var app = builder.Build();
 

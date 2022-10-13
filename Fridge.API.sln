@@ -3,13 +3,15 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.3.32922.545
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fridge.API", "Fridge.API\Fridge.API.csproj", "{1C202476-42B9-43B3-899A-998103AC0627}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Fridge.API", "Fridge.API\Fridge.API.csproj", "{1C202476-42B9-43B3-899A-998103AC0627}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Entities", "Entities\Entities.csproj", "{2FDBACE5-84ED-4E0E-99E1-4FD3AAB220D5}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Entities", "Entities\Entities.csproj", "{2FDBACE5-84ED-4E0E-99E1-4FD3AAB220D5}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Contracts", "Contracts\Contracts.csproj", "{D36294C8-EE9D-4054-B2DD-03321DBD833E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Contracts", "Contracts\Contracts.csproj", "{D36294C8-EE9D-4054-B2DD-03321DBD833E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Repository", "Repository\Repository.csproj", "{BE0FD70C-AC87-4C7B-8CDE-F60516718857}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Repository", "Repository\Repository.csproj", "{BE0FD70C-AC87-4C7B-8CDE-F60516718857}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LoggerService", "LoggerService,\LoggerService.csproj", "{3C21CAF7-9C50-4E37-BF74-8FCF13DB30EE}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,6 +35,10 @@ Global
 		{BE0FD70C-AC87-4C7B-8CDE-F60516718857}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{BE0FD70C-AC87-4C7B-8CDE-F60516718857}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{BE0FD70C-AC87-4C7B-8CDE-F60516718857}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3C21CAF7-9C50-4E37-BF74-8FCF13DB30EE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3C21CAF7-9C50-4E37-BF74-8FCF13DB30EE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3C21CAF7-9C50-4E37-BF74-8FCF13DB30EE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3C21CAF7-9C50-4E37-BF74-8FCF13DB30EE}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

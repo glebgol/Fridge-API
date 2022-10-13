@@ -11,11 +11,13 @@ namespace Fridge.API.Controllers
     {
         private readonly IRepositoryManager _repository;
         private readonly IMapper _mapper;
+        private readonly ILoggerManager _logger;
 
-        public FridgeController(IRepositoryManager repository, IMapper mapper)
+        public FridgeController(IRepositoryManager repository, IMapper mapper, ILoggerManager logger)
         {
             _repository = repository;
             _mapper = mapper;
+            _logger = logger;
         }
 
         [HttpGet]
