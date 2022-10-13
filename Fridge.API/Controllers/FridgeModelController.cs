@@ -20,16 +20,9 @@ namespace Fridge.API.Controllers
         [HttpGet]
         public IActionResult GetAllFridgeModels()
         {
-            try
-            {
-                var models = _repository.FridgeModels.GetAllFridgeModels(trackChanges: false);
-                var modelsDto = _mapper.Map<IEnumerable<FridgeModelDto>>(models);
-                return Ok(modelsDto);
-            }
-            catch (Exception ex)
-            {
-                return BadRequest(ex.Message);
-            }
+            var models = _repository.FridgeModels.GetAllFridgeModels(trackChanges: false);
+            var modelsDto = _mapper.Map<IEnumerable<FridgeModelDto>>(models);
+            return Ok(modelsDto);
         }
     }
 }

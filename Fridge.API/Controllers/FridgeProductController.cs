@@ -21,16 +21,9 @@ namespace Fridge.API.Controllers
         [HttpGet("{fridgeId}")]
         public IActionResult GetFridgeProducts(int fridgeId)
         {
-            try
-            {
-                var products = _repository.FridgeProducts.GetFridgeProducts(fridgeId, trackChanges: false);
-                var productsDto = _mapper.Map<IEnumerable<FridgeProductDto>>(products);
-                return Ok(productsDto);
-            }
-            catch (Exception ex)
-            {
-                return BadRequest(ex.Message);
-            }
+            var products = _repository.FridgeProducts.GetFridgeProducts(fridgeId, trackChanges: false);
+            var productsDto = _mapper.Map<IEnumerable<FridgeProductDto>>(products);
+            return Ok(productsDto);
         }
     }
 }

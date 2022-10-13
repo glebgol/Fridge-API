@@ -23,31 +23,17 @@ namespace Fridge.API.Controllers
         [HttpGet]
         public IActionResult GetAllFridges()
         {
-            try
-            {
-                var fridges = _repository.Fridges.GetAllFridges(trackChanges: false);
-                var fridgesDto = _mapper.Map<IEnumerable<FridgeDto>>(fridges);
-                return Ok(fridgesDto);
-            }
-            catch (Exception ex)
-            {
-                return BadRequest(ex.Message);
-            }
+            var fridges = _repository.Fridges.GetAllFridges(trackChanges: false);
+            var fridgesDto = _mapper.Map<IEnumerable<FridgeDto>>(fridges);
+            return Ok(fridgesDto);
         }
 
         [HttpPost]
         public IActionResult PostFridge(Entities.Models.Fridge fridge)
         {
-            try
-            {
-                _repository.Fridges.AddFridge(fridge);
-                var fridgeDto = _mapper.Map<FridgeDto>(fridge);
-                return CreatedAtAction(nameof(PostFridge), new { id = fridge.Id }, fridgeDto);
-            }
-            catch (Exception ex)
-            {
-                return BadRequest(ex.Message);
-            }
+            _repository.Fridges.AddFridge(fridge);
+            var fridgeDto = _mapper.Map<FridgeDto>(fridge);
+            return CreatedAtAction(nameof(PostFridge), new { id = fridge.Id }, fridgeDto);
         }
     }
 }
