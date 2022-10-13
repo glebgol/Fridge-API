@@ -1,6 +1,7 @@
 using Contracts.Interfaces;
 using Entities.Models;
 using LoggerService;
+using Microsoft.AspNetCore.Diagnostics;
 using Repository;
 
 
@@ -24,6 +25,26 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
+
+app.UseExceptionHandler(appError =>
+{
+    appError.Run(async context =>
+    {
+        context.Response.StatusCode = (int)System.Net.HttpStatusCode.InternalServerError;
+        context.Response.ContentType = "application/json";
+        var contextFeature = context.Features.Get<IExceptionHandlerFeature>();
+        if (contextFeature != null)
+        {
+            app.Logger.LogError($"Something went wrong: {contextFeature.Error}");
+            await context.Response.WriteAsync(new ErrorDetails()
+            {
+                StatusCode = context.Response.StatusCode,
+                Message = "Internal Server Error."
+
+            }.ToString());
+        }
+    });
+});
 
 app.UseHttpsRedirection();
 
