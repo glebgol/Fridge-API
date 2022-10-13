@@ -1,6 +1,6 @@
 using Contracts.Interfaces;
 using Entities.Models;
-using LoggerService_;
+using LoggerService;
 using Repository;
 
 

@@ -1,7 +1,7 @@
 ﻿using Contracts.Interfaces;
 using NLog;
 
-namespace LoggerService_
+namespace LoggerService
 {
     public class LoggerManager : ILoggerManager
     {
