@@ -2,6 +2,7 @@ using Contracts.Interfaces;
 using Entities.Models;
 using LoggerService;
 using Microsoft.AspNetCore.Diagnostics;
+using NLog;
 using Repository;
 
 
@@ -16,6 +17,7 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddDbContext<FridgeDbContext>();
 builder.Services.AddScoped<ILoggerManager, LoggerManager>();
+LogManager.LoadConfiguration(string.Concat(Directory.GetCurrentDirectory(), "/nlog.config"));
 
 var app = builder.Build();
 

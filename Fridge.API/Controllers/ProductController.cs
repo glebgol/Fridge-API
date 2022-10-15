@@ -17,6 +17,7 @@ namespace Fridge.API.Controllers
             _repository = repository;
             _mapper = mapper;
         }
+
         [HttpGet]
         public IActionResult GetAllProducts()
         {

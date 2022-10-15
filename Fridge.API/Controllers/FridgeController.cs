@@ -23,9 +23,18 @@ namespace Fridge.API.Controllers
         [HttpGet]
         public IActionResult GetAllFridges()
         {
+            throw new Exception("Some bad news!");
             var fridges = _repository.Fridges.GetAllFridges(trackChanges: false);
             var fridgesDto = _mapper.Map<IEnumerable<FridgeDto>>(fridges);
             return Ok(fridgesDto);
+        }
+
+        [HttpGet("{id}")]
+        public IActionResult GetFridge(int id)
+        {
+            var fridge = _repository.Fridges.GetFridge(id);
+            var fridgeDto = _mapper.Map<FridgeDto>(fridge);
+            return Ok(fridgeDto);
         }
 
         [HttpPost]

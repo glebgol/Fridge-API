@@ -6,5 +6,6 @@ namespace Contracts.Interfaces
     {
         IEnumerable<Fridge> GetAllFridges(bool trackChanges);
         void AddFridge(Fridge fridge);
+        Fridge GetFridge(int id);
     }
 }

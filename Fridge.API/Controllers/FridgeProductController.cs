@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Fridge.API.Controllers
 {
-    [Route("api/fridge-products")]
+    [Route("api/fridges/{fridgeId}/products")]
     [ApiController]
     public class FridgeProductController : ControllerBase
     {
@@ -18,7 +18,7 @@ namespace Fridge.API.Controllers
             _mapper = mapper;
         }
 
-        [HttpGet("{fridgeId}")]
+        [HttpGet]
         public IActionResult GetFridgeProducts(int fridgeId)
         {
             var products = _repository.FridgeProducts.GetFridgeProducts(fridgeId, trackChanges: false);

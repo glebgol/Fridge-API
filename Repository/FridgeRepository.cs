@@ -18,5 +18,10 @@ namespace Repository
         {
             return FindAll(trackChanges).ToList();
         }
+
+        public Fridge GetFridge(int id)
+        {
+            return FindById(id);
+        }
     }
 }
