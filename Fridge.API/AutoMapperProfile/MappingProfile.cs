@@ -14,6 +14,11 @@ namespace Fridge.API.AutoMapperProfile
             CreateMap<FridgeProduct, FridgeProductDto>()
                 .ForMember(f => f.Name,
                 opt => opt.MapFrom(src => src.Fridge.Name));
+
+            CreateMap<FridgeForCreationDto, Entities.Models.Fridge>();
+            CreateMap<FridgeModelForCreationDto, FridgeModel>();
+            CreateMap<ProductForCreationDto, Product>();
+            CreateMap<FridgeProductForCreationDto, FridgeProduct>();
         }
     }
 }
