@@ -1,17 +1,18 @@
 ﻿using Contracts.Interfaces;
+using Entities;
 using Entities.Models;
 
 namespace Repository
 {
     public class FridgeRepository : RepositoryBase<Fridge>, IFridgeRepository
     {
-        public FridgeRepository(FridgeDbContext repositoryContext) : base(repositoryContext)
+        public FridgeRepository(RepositoryContext repositoryContext) : base(repositoryContext)
         {
         }
 
-        public void AddFridge(Fridge fridge)
+        public void CreateFridge(int fridgeModelId, Fridge fridge)
         {
-            Create(fridge);
+            throw new NotImplementedException();
         }
 
         public IEnumerable<Fridge> GetAllFridges(bool trackChanges)

@@ -1,5 +1,5 @@
 ﻿using Contracts.Interfaces;
-using Entities.Models;
+using Entities;
 using Microsoft.EntityFrameworkCore;
 using System.Linq.Expressions;
 
@@ -7,9 +7,9 @@ namespace Repository
 {
     public abstract class RepositoryBase<T> : IRepositoryBase<T> where T : class
     {
-        protected FridgeDbContext RepositoryContext;
+        protected RepositoryContext RepositoryContext;
 
-        public RepositoryBase(FridgeDbContext repositoryContext)
+        public RepositoryBase(RepositoryContext repositoryContext)
         {
             RepositoryContext = repositoryContext;
         }

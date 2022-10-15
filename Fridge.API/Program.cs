@@ -1,10 +1,11 @@
 using Contracts.Interfaces;
+using Entities;
 using Entities.Models;
 using LoggerService;
 using Microsoft.AspNetCore.Diagnostics;
+using Microsoft.EntityFrameworkCore;
 using NLog;
 using Repository;
-
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -15,7 +16,11 @@ builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
-builder.Services.AddDbContext<FridgeDbContext>();
+
+builder.Services.AddDbContext<RepositoryContext>(opt =>
+opt.UseSqlServer(builder.Configuration.GetConnectionString("DefaultSqlConnection"),
+b => b.MigrationsAssembly("Fridge.API")));
+
 builder.Services.AddScoped<ILoggerManager, LoggerManager>();
 LogManager.LoadConfiguration(string.Concat(Directory.GetCurrentDirectory(), "/nlog.config"));
 

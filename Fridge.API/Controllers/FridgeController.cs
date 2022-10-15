@@ -23,7 +23,6 @@ namespace Fridge.API.Controllers
         [HttpGet]
         public IActionResult GetAllFridges()
         {
-            throw new Exception("Some bad news!");
             var fridges = _repository.Fridges.GetAllFridges(trackChanges: false);
             var fridgesDto = _mapper.Map<IEnumerable<FridgeDto>>(fridges);
             return Ok(fridgesDto);
@@ -37,12 +36,10 @@ namespace Fridge.API.Controllers
             return Ok(fridgeDto);
         }
 
-        [HttpPost]
-        public IActionResult PostFridge(Entities.Models.Fridge fridge)
+        [HttpPost("{fridgeModelId}")]
+        public IActionResult PostFridge(Guid fridgeModelId, FridgeForCreationDto fridge)
         {
-            _repository.Fridges.AddFridge(fridge);
-            var fridgeDto = _mapper.Map<FridgeDto>(fridge);
-            return CreatedAtAction(nameof(PostFridge), new { id = fridge.Id }, fridgeDto);
+            return BadRequest();
         }
     }
 }

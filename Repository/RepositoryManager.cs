@@ -1,17 +1,17 @@
 ﻿using Contracts.Interfaces;
-using Entities.Models;
+using Entities;
 
 namespace Repository
 {
     public class RepositoryManager : IRepositoryManager
     {
-        private FridgeDbContext _repositoryContext;
+        private RepositoryContext _repositoryContext;
         private IFridgeModelRepository _fridgeModelRepository;
         private IFridgeRepository _fridgeRepository;
         private IFridgeProductRepository _fridgeProductRepository;
         private IProductRepository _productRepository;
 
-        public RepositoryManager(FridgeDbContext repositoryContext)
+        public RepositoryManager(RepositoryContext repositoryContext)
         {
             _repositoryContext = repositoryContext;
         }

@@ -4,16 +4,12 @@ namespace Entities.Models
 {
     public partial class FridgeModel
     {
-        public FridgeModel()
-        {
-            Fridges = new HashSet<Fridge>();
-        }
+        [Key]
+        public Guid Id { get; set; }
 
-        public int Id { get; set; }
+        [Required(ErrorMessage = "FridgeModel name is a required field.")]
         [StringLength(50, ErrorMessage = "Name length can't be more than 50.")]
-        public string Name { get; set; } = null!;
+        public string Name { get; set; }
         public int? Year { get; set; }
-
-        public virtual ICollection<Fridge> Fridges { get; set; }
     }
 }

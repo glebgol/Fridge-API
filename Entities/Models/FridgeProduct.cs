@@ -1,13 +1,22 @@
-﻿namespace Entities.Models
+﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+
+namespace Entities.Models
 {
     public partial class FridgeProduct
     {
-        public int Id { get; set; }
-        public int ProductId { get; set; }
-        public int FridgeId { get; set; }
+        [Key]
+        public Guid Id { get; set; }
+
         public int Quantity { get; set; }
 
-        public virtual Fridge Fridge { get; set; } = null!;
-        public virtual Product Product { get; set; } = null!;
+        [ForeignKey(nameof(Product))]
+        public Guid ProductId { get; set; }
+        public virtual Product Product { get; set; }
+
+        [ForeignKey(nameof(Fridge))]
+        public Guid FridgeId { get; set; }
+        public virtual Fridge Fridge { get; set; }
+
     }
 }
