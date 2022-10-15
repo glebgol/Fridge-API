@@ -10,6 +10,13 @@ namespace Repository
         {
         }
 
+        public void CreateFridgeProduct(Guid fridgeId, Guid productId, FridgeProduct fridgeProduct)
+        {
+            fridgeProduct.ProductId = productId;
+            fridgeProduct.FridgeId = fridgeId;
+            Create(fridgeProduct);
+        }
+
         public IEnumerable<FridgeProduct> GetFridgeProducts(Guid fridgeId, bool trackChanges)
         {
             return FindByCondition(fp => fp.FridgeId == fridgeId, trackChanges).ToList();

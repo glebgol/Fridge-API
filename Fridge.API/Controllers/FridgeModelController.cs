@@ -39,7 +39,6 @@ namespace Fridge.API.Controllers
             }
             var modelEntity = _mapper.Map<FridgeModel>(model);
             _repository.FridgeModels.CreateFridgeModel(modelEntity);
-            _logger.LogError(modelEntity.Name);
             _repository.Save();
 
             var modelToReturn = _mapper.Map<FridgeModelDto>(modelEntity);

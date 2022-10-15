@@ -19,5 +19,10 @@ namespace Repository
         {
             return FindAll(trackChanges).ToList();
         }
+
+        public FridgeModel GetFridgeModel(Guid Id)
+        {
+            return FindById(Id);
+        }
     }
 }

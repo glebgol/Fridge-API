@@ -5,7 +5,7 @@ namespace Contracts.Interfaces
     public interface IFridgeRepository
     {
         IEnumerable<Fridge> GetAllFridges(bool trackChanges);
-        Fridge GetFridge(int id);
-        void CreateFridge(int fridgeModelId, Fridge fridge);
+        Fridge GetFridge(Guid id);
+        void CreateFridge(Guid fridgeModelId, Fridge fridge);
     }
 }

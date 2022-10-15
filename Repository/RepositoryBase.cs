@@ -47,7 +47,7 @@ namespace Repository
             RepositoryContext.Set<T>().Remove(entity);
         }
 
-        public T FindById(int id)
+        public T FindById(Guid id)
         {
             return RepositoryContext.Set<T>().Find(id);
         }

@@ -10,9 +10,10 @@ namespace Repository
         {
         }
 
-        public void CreateFridge(int fridgeModelId, Fridge fridge)
+        public void CreateFridge(Guid fridgeModelId, Fridge fridge)
         {
-            throw new NotImplementedException();
+            fridge.ModelId = fridgeModelId;
+            Create(fridge);
         }
 
         public IEnumerable<Fridge> GetAllFridges(bool trackChanges)
@@ -20,7 +21,7 @@ namespace Repository
             return FindAll(trackChanges).ToList();
         }
 
-        public Fridge GetFridge(int id)
+        public Fridge GetFridge(Guid id)
         {
             return FindById(id);
         }

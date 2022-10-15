@@ -3,6 +3,7 @@ using Contracts.Interfaces;
 using Entities.DataTransferObjects;
 using Microsoft.AspNetCore.Mvc;
 
+
 namespace Fridge.API.Controllers
 {
     [Route("api/fridges")]
@@ -29,7 +30,7 @@ namespace Fridge.API.Controllers
         }
 
         [HttpGet("{id}")]
-        public IActionResult GetFridge(int id)
+        public IActionResult GetFridge(Guid id)
         {
             var fridge = _repository.Fridges.GetFridge(id);
             var fridgeDto = _mapper.Map<FridgeDto>(fridge);
@@ -37,9 +38,30 @@ namespace Fridge.API.Controllers
         }
 
         [HttpPost("{fridgeModelId}")]
-        public IActionResult PostFridge(Guid fridgeModelId, FridgeForCreationDto fridge)
+        public IActionResult PostFridge(Guid fridgeModelId, [FromBody] FridgeForCreationDto fridge)
         {
-            return BadRequest();
+            if (fridge == null)
+            {
+                _logger.LogError("FridgeForCreationDto object sent from client is null.");
+                return BadRequest("FridgeForCreationDto object is null");
+            }
+
+            var fridgeModel = _repository.FridgeModels.GetFridgeModel(fridgeModelId);
+
+            if (fridgeModel == null)
+            {
+                _logger.LogInfo($"FridgeModel with id: {fridgeModelId} doesn't exist in the database.");
+                return NotFound();
+            }
+
+            var fridgeEntity = _mapper.Map<Entities.Models.Fridge>(fridge);
+
+            _repository.Fridges.CreateFridge(fridgeModelId, fridgeEntity);
+            _repository.Save();
+
+            var fridgeDto = _mapper.Map<FridgeDto>(fridgeEntity);
+
+            return CreatedAtRoute(new { fridgeModelId, fridgeDto.Id }, fridgeDto);
         }
     }
 }

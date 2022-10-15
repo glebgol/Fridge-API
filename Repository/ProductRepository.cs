@@ -10,9 +10,19 @@ namespace Repository
         {
         }
 
+        public void CreateProduct(Product product)
+        {
+            Create(product);
+        }
+
         public IEnumerable<Product> GetAllProducts(bool trackChanges)
         {
             return FindAll(trackChanges).ToList();
+        }
+
+        public Product GetProduct(Guid id)
+        {
+            return FindById(id);
         }
     }
 }
