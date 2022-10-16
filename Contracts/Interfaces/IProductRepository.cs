@@ -7,5 +7,6 @@ namespace Contracts.Interfaces
         IEnumerable<Product> GetAllProducts(bool trackChanges);
         void CreateProduct(Product product);
         Product GetProduct(Guid id);
+        void DeleteProduct(Product product);
     }
 }

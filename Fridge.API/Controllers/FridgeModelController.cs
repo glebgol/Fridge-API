@@ -44,5 +44,20 @@ namespace Fridge.API.Controllers
             var modelToReturn = _mapper.Map<FridgeModelDto>(modelEntity);
             return CreatedAtRoute(new { id = modelToReturn.Id }, modelToReturn);
         }
+
+        [HttpDelete("{id}")]
+        public IActionResult DeleteFridgeModel(Guid id)
+        {
+            var fridgeModel = _repository.FridgeModels.GetFridgeModel(id);
+            if (fridgeModel == null)
+            {
+                _logger.LogInfo($"FridgeModel with id: {id} doesn't exist in the database.");
+                return NotFound();
+            }
+            _repository.FridgeModels.DeleteFridgeModel(fridgeModel);
+            _repository.Save();
+
+            return NoContent();
+        }
     }
 }

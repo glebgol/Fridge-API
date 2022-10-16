@@ -63,5 +63,20 @@ namespace Fridge.API.Controllers
 
             return CreatedAtRoute(new { fridgeModelId, fridgeDto.Id }, fridgeDto);
         }
+
+        [HttpDelete("{id}")]
+        public IActionResult DeleteFridge(Guid id)
+        {
+            var fridge = _repository.Fridges.GetFridge(id);
+            if (fridge == null)
+            {
+                _logger.LogInfo($"Fridge with id: {id} doesn't exist in the database.");
+                return NotFound();
+            }
+            _repository.Fridges.DeleteFridge(fridge);
+            _repository.Save();
+
+            return NoContent();
+        }
     }
 }

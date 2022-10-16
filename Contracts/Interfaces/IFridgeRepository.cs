@@ -7,5 +7,6 @@ namespace Contracts.Interfaces
         IEnumerable<Fridge> GetAllFridges(bool trackChanges);
         Fridge GetFridge(Guid id);
         void CreateFridge(Guid fridgeModelId, Fridge fridge);
+        void DeleteFridge(Fridge fridge);
     }
 }

@@ -44,5 +44,20 @@ namespace Fridge.API.Controllers
             var productDto = _mapper.Map<ProductDto>(productEntity);
             return CreatedAtRoute(new { id = productDto.Id }, productDto);
         }
+
+        [HttpDelete("{id}")]
+        public IActionResult DeleteProduct(Guid id)
+        {
+            var product = _repository.Products.GetProduct(id);
+            if (product == null)
+            {
+                _logger.LogInfo($"Product with id: {id} doesn't exist in the database.");
+                return NotFound();
+            }
+            _repository.Products.DeleteProduct(product);
+            _repository.Save();
+
+            return NoContent();
+        }
     }
 }

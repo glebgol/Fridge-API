@@ -17,6 +17,16 @@ namespace Repository
             Create(fridgeProduct);
         }
 
+        public void DeleteFridgeProduct(FridgeProduct fridgeProduct)
+        {
+            Delete(fridgeProduct);
+        }
+
+        public FridgeProduct GetFridgeProduct(Guid id)
+        {
+            return FindById(id);
+        }
+
         public IEnumerable<FridgeProduct> GetFridgeProducts(Guid fridgeId, bool trackChanges)
         {
             return FindByCondition(fp => fp.FridgeId == fridgeId, trackChanges).ToList();

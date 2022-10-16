@@ -16,6 +16,11 @@ namespace Repository
             Create(fridge);
         }
 
+        public void DeleteFridge(Fridge fridge)
+        {
+            Delete(fridge);
+        }
+
         public IEnumerable<Fridge> GetAllFridges(bool trackChanges)
         {
             return FindAll(trackChanges).ToList();
