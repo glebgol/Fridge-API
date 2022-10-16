@@ -19,6 +19,9 @@ namespace Fridge.API.AutoMapperProfile
             CreateMap<FridgeModelForCreationDto, FridgeModel>();
             CreateMap<ProductForCreationDto, Product>();
             CreateMap<FridgeProductForCreationDto, FridgeProduct>();
+
+            CreateMap<FridgeForUpdateDto, Entities.Models.Fridge>();
+            CreateMap<FridgeProductForUpdateDto, FridgeProduct>();
         }
     }
 }
