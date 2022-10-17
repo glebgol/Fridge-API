@@ -33,8 +33,16 @@ namespace Fridge.API.Controllers
         public IActionResult GetFridge(Guid id)
         {
             var fridge = _repository.Fridges.GetFridge(id);
-            var fridgeDto = _mapper.Map<FridgeDto>(fridge);
-            return Ok(fridgeDto);
+            if (fridge == null)
+            {
+                _logger.LogInfo($"Fridge with id: {id} doesn't exist in the database.");
+                return NotFound();
+            }
+            else
+            {
+                var fridgeDto = _mapper.Map<FridgeDto>(fridge);
+                return Ok(fridgeDto);
+            }
         }
 
         [HttpPost("{fridgeModelId}")]

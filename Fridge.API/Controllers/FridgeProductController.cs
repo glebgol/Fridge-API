@@ -24,9 +24,18 @@ namespace Fridge.API.Controllers
         [HttpGet]
         public IActionResult GetFridgeProducts(Guid fridgeId)
         {
-            var products = _repository.FridgeProducts.GetFridgeProducts(fridgeId, trackChanges: false);
-            var productsDto = _mapper.Map<IEnumerable<FridgeProductDto>>(products);
-            return Ok(productsDto);
+            var fridge = _repository.Fridges.GetFridge(fridgeId);
+            if (fridge == null)
+            {
+                _logger.LogInfo($"Fridge with id: {fridgeId} doesn't exist in the database.");
+                return NotFound();
+            }
+            else
+            {
+                var products = _repository.FridgeProducts.GetFridgeProducts(fridgeId, trackChanges: false);
+                var productsDto = _mapper.Map<IEnumerable<FridgeProductDto>>(products);
+                return Ok(productsDto);
+            }
         }
 
         [HttpPost("{productId}")]
