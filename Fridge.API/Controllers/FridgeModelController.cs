@@ -59,5 +59,27 @@ namespace Fridge.API.Controllers
 
             return NoContent();
         }
+
+        [HttpPut("{id}")]
+        public IActionResult UpdateFridgeModel(Guid id, [FromBody]
+        FridgeModelForUpdateDto fridgeModel)
+        {
+            if (fridgeModel == null)
+            {
+                _logger.LogError("FridgeModelForUpdateDto object sent from client is null.");
+                return BadRequest("FridgeModelForUpdateDto object is null");
+            }
+
+            var fridgeModelEntity = _repository.FridgeModels.GetFridgeModel(id);
+            if (fridgeModelEntity == null)
+            {
+                _logger.LogInfo($"FridgeModel with id: {id} doesn't exist in the database.");
+                return NotFound();
+            }
+
+            _mapper.Map(fridgeModel, fridgeModelEntity);
+            _repository.Save();
+            return NoContent();
+        }
     }
 }

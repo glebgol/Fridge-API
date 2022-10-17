@@ -92,7 +92,7 @@ namespace Fridge.API.Controllers
             var fridgeEntity = _repository.Fridges.GetFridge(id);
             if (fridgeEntity == null)
             {
-                _logger.LogInfo($"Employee with id: {id} doesn't exist in the database.");
+                _logger.LogInfo($"Fridge with id: {id} doesn't exist in the database.");
                 return NotFound();
             }
 

@@ -59,5 +59,27 @@ namespace Fridge.API.Controllers
 
             return NoContent();
         }
+
+        [HttpPut("{id}")]
+        public IActionResult UpdateProduct(Guid id, [FromBody]
+        ProductForUpdateDto product)
+        {
+            if (product == null)
+            {
+                _logger.LogError("ProductForUpdateDto object sent from client is null.");
+                return BadRequest("ProductForUpdateDto object is null");
+            }
+
+            var productEntity = _repository.Products.GetProduct(id);
+            if (productEntity == null)
+            {
+                _logger.LogInfo($"Product with id: {id} doesn't exist in the database.");
+                return NotFound();
+            }
+
+            _mapper.Map(product, productEntity);
+            _repository.Save();
+            return NoContent();
+        }
     }
 }
