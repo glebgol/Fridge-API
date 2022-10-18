@@ -95,5 +95,21 @@ namespace Fridge.API.Tests
                 return new Guid("87ea011e-6d52-42a3-b547-08dab08812cc");
             }
         }
+
+        public static Guid ExistingFridgeId
+        {
+            get
+            {
+                return new Guid("46aad042-fa8d-49ea-b545-08dab08812cc");
+            }
+        }
+
+        public static Guid NotExistingFridgeId
+        {
+            get
+            {
+                return new Guid("55aad042-fa8d-49ea-b545-08dab08812cc");
+            }
+        }
     }
 }

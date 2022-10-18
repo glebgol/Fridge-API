@@ -1,6 +1,5 @@
 ﻿using AutoMapper;
 using Contracts.Interfaces;
-using Entities.DataTransferObjects;
 using Fridge.API.AutoMapperProfile;
 using Fridge.API.Controllers;
 using Microsoft.AspNetCore.Mvc;
@@ -115,18 +114,9 @@ namespace Fridge.API.Tests
         public void PostFridge_NotNullFridge_ReturnsCreatedAtRoute()
         {
             // Assign
-            var expectedFridge = new Entities.Models.Fridge();
-            var expectedFridgeDto = new FridgeDto();
-            var fridges = GetTestItems.Fridges.ToList();
-            int sizeBeforeCreating = fridges.Count;
             _mockRepo.Setup(repo => repo.FridgeModels.GetFridgeModel(It.IsAny<Guid>()))
                 .Returns<Guid>(guid => GetTestItems.FridgeModels.FirstOrDefault(fm => fm.Id == guid));
             _mockRepo.Setup(repo => repo.Fridges.CreateFridge(It.IsAny<Guid>(), It.IsNotNull<Entities.Models.Fridge>()))
-                .Callback((Guid fridgeModelId, Entities.Models.Fridge fridge) =>
-                {
-                    fridge.ModelId = fridgeModelId;
-                    fridges.Add(fridge);
-                })
                 .Verifiable();
 
             var controller = new FridgeController(_mockRepo.Object, _mapper, _mockLogger.Object);
@@ -138,27 +128,41 @@ namespace Fridge.API.Tests
 
             // Assert
             Assert.IsType<CreatedAtRouteResult>(result);
-            Assert.Equal<int>(sizeBeforeCreating, fridges.Count - 1);
         }
 
         [Fact]
         public void DeleteFridge_NotExisting_ReturnsNotFound()
         {
             // Assign
+            _mockRepo.Setup(repo => repo.Fridges.GetFridge(It.IsAny<Guid>()))
+                .Returns<Guid>(guid => GetTestItems.Fridges.FirstOrDefault(f => f.Id == guid));
 
+            var controller = new FridgeController(_mockRepo.Object, _mapper, _mockLogger.Object);
+            var notExistingFridgeId = GetTestItems.NotExistingFridgeId;
             // Act
+            var result = controller.DeleteFridge(notExistingFridgeId);
 
             // Assert
+            Assert.IsType<NotFoundResult>(result);
         }
 
         [Fact]
         public void DeleteFridge_Existing_ReturnsNoContent()
         {
             // Assign
+            _mockRepo.Setup(repo => repo.Fridges.GetFridge(It.IsAny<Guid>()))
+                .Returns<Guid>(guid => GetTestItems.Fridges.FirstOrDefault(f => f.Id == guid));
+            _mockRepo.Setup(repo => repo.Fridges.DeleteFridge(It.IsAny<Entities.Models.Fridge>()))
+                .Verifiable();
+
+            var controller = new FridgeController(_mockRepo.Object, _mapper, _mockLogger.Object);
+            var existingFridgeId = GetTestItems.ExistingFridgeId;
 
             // Act
+            var result = controller.DeleteFridge(existingFridgeId);
 
             // Assert
+            Assert.IsType<NoContentResult>(result);
         }
 
         [Fact]
