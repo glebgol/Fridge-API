@@ -53,6 +53,19 @@ namespace Fridge.API.Tests
                 };
             }
         }
+
+        public static FridgeForUpdateDto FridgeForUpdate
+        {
+            get
+            {
+                return new FridgeForUpdateDto
+                {
+                    Name = "Холодильник у бабушки",
+                    OwnerName = "Бабушка и Дедушка",
+                };
+            }
+        }
+
         public static IEnumerable<FridgeModel> FridgeModels
         {
             get

@@ -51,7 +51,7 @@ namespace Fridge.API.Tests
             _mockRepo.Setup(repo => repo.Fridges.GetFridge(It.IsAny<Guid>()))
                 .Returns<Guid>(guid => GetTestItems.Fridges.FirstOrDefault(f => f.Id == guid));
 
-            var notExistingFridgeId = new Guid("646f7719-74a5-47af-a2b9-3e99665e0000");
+            var notExistingFridgeId = GetTestItems.NotExistingFridgeId;
             var controller = new FridgeController(_mockRepo.Object, _mapper, _mockLogger.Object);
 
             // Act
@@ -169,30 +169,50 @@ namespace Fridge.API.Tests
         public void UpdateFridge_NullFridgeForUpdate_ReturnsBadRequest()
         {
             // Assign
+            var controller = new FridgeController(_mockRepo.Object, _mapper, _mockLogger.Object);
+            var id = GetTestItems.ExistingFridgeId;
 
             // Act
+            var result = controller.UpdateFridge(id, null);
 
             // Assert
+            Assert.IsType<BadRequestObjectResult>(result);
         }
 
         [Fact]
         public void UpdateFridge_NotExisting_ReturnsNotFound()
         {
             // Assign
+            _mockRepo.Setup(repo => repo.Fridges.GetFridge(It.IsAny<Guid>()))
+                .Returns<Guid>(guid => GetTestItems.Fridges.FirstOrDefault(f => f.Id == guid));
+
+            var notExistingFridgeId = GetTestItems.NotExistingFridgeId;
+            var controller = new FridgeController(_mockRepo.Object, _mapper, _mockLogger.Object);
+            var fridgeForUpdate = GetTestItems.FridgeForUpdate;
 
             // Act
+            var result = controller.UpdateFridge(notExistingFridgeId, fridgeForUpdate);
 
             // Assert
+            Assert.IsType<NotFoundResult>(result);
         }
 
         [Fact]
         public void UpdateFridge_Existing_NoContent()
         {
             // Assign
+            _mockRepo.Setup(repo => repo.Fridges.GetFridge(It.IsAny<Guid>()))
+                .Returns<Guid>(guid => GetTestItems.Fridges.FirstOrDefault(f => f.Id == guid));
+
+            var existingFridgeId = GetTestItems.ExistingFridgeId;
+            var controller = new FridgeController(_mockRepo.Object, _mapper, _mockLogger.Object);
+            var fridgeForUpdate = GetTestItems.FridgeForUpdate;
 
             // Act
+            var result = controller.UpdateFridge(existingFridgeId, fridgeForUpdate);
 
             // Assert
+            Assert.IsType<NoContentResult>(result);
         }
     }
 }
