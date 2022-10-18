@@ -95,11 +95,35 @@ namespace Fridge.API.Tests
             }
         }
 
+        public static FridgeModelForCreationDto FridgeModelForCreation
+        {
+            get
+            {
+                return new FridgeModelForCreationDto
+                {
+                    Name = "Atlant-2022",
+                    Year = 2022
+                };
+            }
+        }
+
+        public static FridgeModelForUpdateDto FridgeModelForUpdate
+        {
+            get
+            {
+                return new FridgeModelForUpdateDto
+                {
+                    Name = "Atlant-2022",
+                    Year = 2022
+                };
+            }
+        }
+
         public static Guid ExistingFridgeModelId
         {
             get
             {
-                return new Guid("8cbe08ff-a185-4c9f-0494-08daaee05b68");
+                return new Guid("97e8aa83-ba12-4226-d1ab-08dab0876da4");
             }
         }
 

@@ -137,6 +137,7 @@ namespace Fridge.API.Tests
             // Assign
             var controller = new FridgeController(_mockRepo.Object, _mapper, _mockLogger.Object);
             var notExistingFridgeId = TestItems.NotExistingFridgeId;
+
             // Act
             var result = controller.DeleteFridge(notExistingFridgeId);
 
