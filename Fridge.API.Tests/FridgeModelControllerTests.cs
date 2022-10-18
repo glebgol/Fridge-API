@@ -1,7 +1,6 @@
 ﻿using AutoMapper;
 using Contracts.Interfaces;
 using Fridge.API.AutoMapperProfile;
-using Fridge.API.Controllers;
 using Moq;
 
 namespace Fridge.API.Tests
@@ -11,7 +10,6 @@ namespace Fridge.API.Tests
         private readonly Mock<IRepositoryManager> _mockRepo;
         private readonly Mock<ILoggerManager> _mockLogger;
         private readonly IMapper _mapper;
-        private readonly FridgeController _fridgeController;
 
         public FridgeModelControllerTests()
         {
@@ -26,6 +24,12 @@ namespace Fridge.API.Tests
                 IMapper mapper = mappingConfig.CreateMapper();
                 _mapper = mapper;
             }
+            SetUpMock();
+        }
+
+        private void SetUpMock()
+        {
+
         }
     }
 }

@@ -12,7 +12,6 @@ namespace Fridge.API.Tests
         private readonly Mock<IRepositoryManager> _mockRepo;
         private readonly Mock<ILoggerManager> _mockLogger;
         private readonly IMapper _mapper;
-        private readonly FridgeController _fridgeController;
 
         public FridgeControllerTests()
         {
