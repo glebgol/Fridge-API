@@ -3,7 +3,7 @@ using Entities.Models;
 
 namespace Fridge.API.Tests
 {
-    static class GetTestItems
+    static class TestItems
     {
         public static IEnumerable<Entities.Models.Fridge> Fridges
         {
@@ -42,6 +42,7 @@ namespace Fridge.API.Tests
                 };
             }
         }
+
         public static FridgeForCreationDto FridgeForCreation
         {
             get
@@ -101,6 +102,7 @@ namespace Fridge.API.Tests
                 return new Guid("8cbe08ff-a185-4c9f-0494-08daaee05b68");
             }
         }
+
         public static Guid NotExistingFridgeModelId
         {
             get

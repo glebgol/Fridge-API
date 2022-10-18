@@ -33,7 +33,7 @@ namespace Fridge.API.Tests
         public void GetAllFridges_ReturnsOkObjectResult()
         {
             // Assign
-            _mockRepo.Setup(repo => repo.Fridges.GetAllFridges(false)).Returns(GetTestItems.Fridges);
+            _mockRepo.Setup(repo => repo.Fridges.GetAllFridges(false)).Returns(TestItems.Fridges);
 
             var controller = new FridgeController(_mockRepo.Object, _mapper, _mockLogger.Object);
 
@@ -49,9 +49,9 @@ namespace Fridge.API.Tests
         {
             // Assign
             _mockRepo.Setup(repo => repo.Fridges.GetFridge(It.IsAny<Guid>()))
-                .Returns<Guid>(guid => GetTestItems.Fridges.FirstOrDefault(f => f.Id == guid));
+                .Returns<Guid>(guid => TestItems.Fridges.FirstOrDefault(f => f.Id == guid));
 
-            var notExistingFridgeId = GetTestItems.NotExistingFridgeId;
+            var notExistingFridgeId = TestItems.NotExistingFridgeId;
             var controller = new FridgeController(_mockRepo.Object, _mapper, _mockLogger.Object);
 
             // Act
@@ -66,7 +66,7 @@ namespace Fridge.API.Tests
         {
             // Assign
             _mockRepo.Setup(repo => repo.Fridges.GetFridge(It.IsAny<Guid>()))
-                .Returns<Guid>(guid => GetTestItems.Fridges.FirstOrDefault(f => f.Id == guid));
+                .Returns<Guid>(guid => TestItems.Fridges.FirstOrDefault(f => f.Id == guid));
 
             var existingFridgeId = new Guid("dbfc4f30-8cc4-47e5-b543-08dab08812cc");
             var controller = new FridgeController(_mockRepo.Object, _mapper, _mockLogger.Object);
@@ -83,7 +83,7 @@ namespace Fridge.API.Tests
         {
             // Assign
             var controller = new FridgeController(_mockRepo.Object, _mapper, _mockLogger.Object);
-            var fridgeModelId = GetTestItems.ExistingFridgeModelId;
+            var fridgeModelId = TestItems.ExistingFridgeModelId;
 
             // Act
             var result = controller.PostFridge(fridgeModelId, null);
@@ -97,11 +97,11 @@ namespace Fridge.API.Tests
         {
             // Assign
             _mockRepo.Setup(repo => repo.FridgeModels.GetFridgeModel(It.IsAny<Guid>()))
-                .Returns<Guid>(guid => GetTestItems.FridgeModels.FirstOrDefault(fm => fm.Id == guid));
+                .Returns<Guid>(guid => TestItems.FridgeModels.FirstOrDefault(fm => fm.Id == guid));
 
             var controller = new FridgeController(_mockRepo.Object, _mapper, _mockLogger.Object);
-            var fridgeModelId = GetTestItems.NotExistingFridgeModelId;
-            var fridgeForCreation = GetTestItems.FridgeForCreation;
+            var fridgeModelId = TestItems.NotExistingFridgeModelId;
+            var fridgeForCreation = TestItems.FridgeForCreation;
 
             // Act
             var result = controller.PostFridge(fridgeModelId, fridgeForCreation);
@@ -115,13 +115,13 @@ namespace Fridge.API.Tests
         {
             // Assign
             _mockRepo.Setup(repo => repo.FridgeModels.GetFridgeModel(It.IsAny<Guid>()))
-                .Returns<Guid>(guid => GetTestItems.FridgeModels.FirstOrDefault(fm => fm.Id == guid));
+                .Returns<Guid>(guid => TestItems.FridgeModels.FirstOrDefault(fm => fm.Id == guid));
             _mockRepo.Setup(repo => repo.Fridges.CreateFridge(It.IsAny<Guid>(), It.IsNotNull<Entities.Models.Fridge>()))
                 .Verifiable();
 
             var controller = new FridgeController(_mockRepo.Object, _mapper, _mockLogger.Object);
-            var fridgeModelId = GetTestItems.ExistingFridgeModelId;
-            var fridgeForCreation = GetTestItems.FridgeForCreation;
+            var fridgeModelId = TestItems.ExistingFridgeModelId;
+            var fridgeForCreation = TestItems.FridgeForCreation;
 
             // Act
             var result = controller.PostFridge(fridgeModelId, fridgeForCreation);
@@ -135,10 +135,10 @@ namespace Fridge.API.Tests
         {
             // Assign
             _mockRepo.Setup(repo => repo.Fridges.GetFridge(It.IsAny<Guid>()))
-                .Returns<Guid>(guid => GetTestItems.Fridges.FirstOrDefault(f => f.Id == guid));
+                .Returns<Guid>(guid => TestItems.Fridges.FirstOrDefault(f => f.Id == guid));
 
             var controller = new FridgeController(_mockRepo.Object, _mapper, _mockLogger.Object);
-            var notExistingFridgeId = GetTestItems.NotExistingFridgeId;
+            var notExistingFridgeId = TestItems.NotExistingFridgeId;
             // Act
             var result = controller.DeleteFridge(notExistingFridgeId);
 
@@ -151,12 +151,12 @@ namespace Fridge.API.Tests
         {
             // Assign
             _mockRepo.Setup(repo => repo.Fridges.GetFridge(It.IsAny<Guid>()))
-                .Returns<Guid>(guid => GetTestItems.Fridges.FirstOrDefault(f => f.Id == guid));
+                .Returns<Guid>(guid => TestItems.Fridges.FirstOrDefault(f => f.Id == guid));
             _mockRepo.Setup(repo => repo.Fridges.DeleteFridge(It.IsAny<Entities.Models.Fridge>()))
                 .Verifiable();
 
             var controller = new FridgeController(_mockRepo.Object, _mapper, _mockLogger.Object);
-            var existingFridgeId = GetTestItems.ExistingFridgeId;
+            var existingFridgeId = TestItems.ExistingFridgeId;
 
             // Act
             var result = controller.DeleteFridge(existingFridgeId);
@@ -170,7 +170,7 @@ namespace Fridge.API.Tests
         {
             // Assign
             var controller = new FridgeController(_mockRepo.Object, _mapper, _mockLogger.Object);
-            var id = GetTestItems.ExistingFridgeId;
+            var id = TestItems.ExistingFridgeId;
 
             // Act
             var result = controller.UpdateFridge(id, null);
@@ -184,11 +184,11 @@ namespace Fridge.API.Tests
         {
             // Assign
             _mockRepo.Setup(repo => repo.Fridges.GetFridge(It.IsAny<Guid>()))
-                .Returns<Guid>(guid => GetTestItems.Fridges.FirstOrDefault(f => f.Id == guid));
+                .Returns<Guid>(guid => TestItems.Fridges.FirstOrDefault(f => f.Id == guid));
 
-            var notExistingFridgeId = GetTestItems.NotExistingFridgeId;
+            var notExistingFridgeId = TestItems.NotExistingFridgeId;
             var controller = new FridgeController(_mockRepo.Object, _mapper, _mockLogger.Object);
-            var fridgeForUpdate = GetTestItems.FridgeForUpdate;
+            var fridgeForUpdate = TestItems.FridgeForUpdate;
 
             // Act
             var result = controller.UpdateFridge(notExistingFridgeId, fridgeForUpdate);
@@ -202,11 +202,11 @@ namespace Fridge.API.Tests
         {
             // Assign
             _mockRepo.Setup(repo => repo.Fridges.GetFridge(It.IsAny<Guid>()))
-                .Returns<Guid>(guid => GetTestItems.Fridges.FirstOrDefault(f => f.Id == guid));
+                .Returns<Guid>(guid => TestItems.Fridges.FirstOrDefault(f => f.Id == guid));
 
-            var existingFridgeId = GetTestItems.ExistingFridgeId;
+            var existingFridgeId = TestItems.ExistingFridgeId;
             var controller = new FridgeController(_mockRepo.Object, _mapper, _mockLogger.Object);
-            var fridgeForUpdate = GetTestItems.FridgeForUpdate;
+            var fridgeForUpdate = TestItems.FridgeForUpdate;
 
             // Act
             var result = controller.UpdateFridge(existingFridgeId, fridgeForUpdate);
