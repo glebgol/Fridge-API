@@ -31,7 +31,8 @@ namespace Fridge.API.Tests
 
         private void SetUpMock()
         {
-            _mockRepo.Setup(repo => repo.Fridges.GetAllFridges(false)).Returns(TestItems.Fridges);
+            _mockRepo.Setup(repo => repo.Fridges.GetAllFridges(false))
+                .Returns(TestItems.Fridges);
 
             _mockRepo.Setup(repo => repo.Fridges.GetFridge(It.IsAny<Guid>()))
                 .Returns<Guid>(guid => TestItems.Fridges.FirstOrDefault(f => f.Id == guid));

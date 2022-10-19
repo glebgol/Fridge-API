@@ -119,6 +119,34 @@ namespace Fridge.API.Tests
             }
         }
 
+        public static IEnumerable<Product> Products
+        {
+            get
+            {
+                return new List<Product>()
+                {
+                    new Product
+                    {
+                        Id = new Guid("7fd9b7c2-f933-465b-ad95-08daaeef87c0"),
+                        Name = "Eggs",
+                        DefaultQuantity = 10
+                    },
+                    new Product
+                    {
+                        Id = new Guid("0f15d609-450c-46eb-626a-08dab06947d8"),
+                        Name = "Apples",
+                        DefaultQuantity = 2
+                    },
+                    new Product
+                    {
+                        Id = new Guid("f3a10026-5260-40ca-626b-08dab06947d8"),
+                        Name = "Пельмени",
+                        DefaultQuantity = 20
+                    }
+                };
+            }
+        }
+
         public static Guid ExistingFridgeModelId
         {
             get
