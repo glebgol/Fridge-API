@@ -1,6 +1,8 @@
 ﻿using AutoMapper;
 using Contracts.Interfaces;
 using Fridge.API.AutoMapperProfile;
+using Fridge.API.Controllers;
+using Microsoft.AspNetCore.Mvc;
 using Moq;
 
 namespace Fridge.API.Tests
@@ -29,43 +31,108 @@ namespace Fridge.API.Tests
 
         private void SetUpMock()
         {
+            _mockRepo.Setup(repo => repo.Fridges.GetFridge(It.IsAny<Guid>()))
+                .Returns<Guid>(guid => TestItems.Fridges.FirstOrDefault(f => f.Id == guid));
 
+            _mockRepo.Setup(repo => repo.FridgeProducts.GetFridgeProducts(It.IsAny<Guid>(), It.IsAny<bool>()))
+                .Returns((Guid guid, bool b) => TestItems.FridgeProducts.Where(fp => fp.FridgeId == guid));
+
+            _mockRepo.Setup(repo => repo.Fridges.GetFridge(It.IsAny<Guid>()))
+                .Returns<Guid>(guid => TestItems.Fridges.FirstOrDefault(f => f.Id == guid));
+
+            _mockRepo.Setup(repo => repo.Products.GetProduct(It.IsAny<Guid>()))
+                .Returns<Guid>(guid => TestItems.Products.FirstOrDefault(p => p.Id == guid));
         }
 
         [Fact]
         public void GetFridgeProducts_NotExistingFridge_ReturnsNotFound()
         {
+            // Assign
+            var controller = new FridgeProductController(_mockRepo.Object, _mapper, _mockLogger.Object);
+            var notExistingFridgeId = TestItems.NotExistingFridgeId;
 
+            // Act
+            var result = controller.GetFridgeProducts(notExistingFridgeId);
+
+            // Assert
+            Assert.IsType<NotFoundResult>(result);
         }
 
         [Fact]
         public void GetFridgeProducts_ExistingFridge_ReturnsOkObjectResult()
         {
+            // Assign
+            var controller = new FridgeProductController(_mockRepo.Object, _mapper, _mockLogger.Object);
+            var existingFridgeId = TestItems.ExistingFridgeId;
 
+            // Act
+            var result = controller.GetFridgeProducts(existingFridgeId);
+
+            // Assert
+            Assert.IsType<OkObjectResult>(result);
         }
 
         [Fact]
         public void CreateFridgeProduct_NullProductForCreate_ReturnsBadRequest()
         {
+            // Assign
+            var controller = new FridgeProductController(_mockRepo.Object, _mapper, _mockLogger.Object);
+            var existingFridgeId = TestItems.ExistingFridgeId;
+            var existingProductId = TestItems.ExistingProductId;
 
+            // Act
+            var result = controller.CreateFridgeProduct(existingFridgeId, existingProductId, null);
+
+            // Assert
+            Assert.IsType<BadRequestObjectResult>(result);
         }
 
         [Fact]
         public void CreateFridgeProduct_NotExistingFridge_ReturnsNotFound()
         {
+            // Assign
+            var controller = new FridgeProductController(_mockRepo.Object, _mapper, _mockLogger.Object);
+            var notExistingFridgeId = TestItems.NotExistingFridgeId;
+            var existingProductId = TestItems.ExistingProductId;
+            var fridgeProductForCreation = TestItems.FridgeProductForCreation;
 
+            // Act
+            var result = controller.CreateFridgeProduct(notExistingFridgeId, existingProductId, fridgeProductForCreation);
+
+            // Assert
+            Assert.IsType<NotFoundObjectResult>(result);
         }
 
         [Fact]
         public void CreateFridgeProduct_NotExistingProduct_ReturnsNotFound()
         {
+            // Assign
+            var controller = new FridgeProductController(_mockRepo.Object, _mapper, _mockLogger.Object);
+            var existingFridgeId = TestItems.ExistingFridgeId;
+            var notExistingProductId = TestItems.NotExistingProductId;
+            var fridgeProductForCreation = TestItems.FridgeProductForCreation;
 
+            // Act
+            var result = controller.CreateFridgeProduct(existingFridgeId, notExistingProductId, fridgeProductForCreation);
+
+            // Assert
+            Assert.IsType<NotFoundObjectResult>(result);
         }
 
         [Fact]
         public void CreateFridgeProduct_ExistingProductAndFridge_ReturnsCreatedAtRoute()
         {
+            // Assign
+            var controller = new FridgeProductController(_mockRepo.Object, _mapper, _mockLogger.Object);
+            var existingFridgeId = TestItems.ExistingFridgeId;
+            var existingProductId = TestItems.ExistingProductId;
+            var fridgeProductForCreation = TestItems.FridgeProductForCreation;
 
+            // Act
+            var result = controller.CreateFridgeProduct(existingFridgeId, existingProductId, fridgeProductForCreation);
+
+            // Assert
+            Assert.IsType<CreatedAtRouteResult>(result);
         }
 
         [Fact]

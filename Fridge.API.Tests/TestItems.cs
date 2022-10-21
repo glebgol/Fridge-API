@@ -171,6 +171,48 @@ namespace Fridge.API.Tests
             }
         }
 
+        public static IEnumerable<FridgeProduct> FridgeProducts
+        {
+            get
+            {
+                return new List<FridgeProduct>()
+                {
+                    new FridgeProduct
+                    {
+                        Id = new Guid("7fd9b7c2-f933-465b-ad95-08daaeef87c0"),
+                        FridgeId = new Guid("dbfc4f30-8cc4-47e5-b543-08dab08812cc"),
+                        ProductId = new Guid("7fd9b7c2-f933-465b-ad95-08daaeef87c0"),
+                        Quantity = 20
+                    },
+                    new FridgeProduct
+                    {
+                        Id = new Guid("0f15d609-450c-46eb-626a-08dab06947d8"),
+                        FridgeId = new Guid("dbfc4f30-8cc4-47e5-b543-08dab08812cc"),
+                        ProductId= new Guid("f3a10026-5260-40ca-626b-08dab06947d8"),
+                        Quantity = 2
+                    },
+                    new FridgeProduct
+                    {
+                        Id = new Guid("f3a10026-5260-40ca-626b-08dab06947d8"),
+                        FridgeId = new Guid("c6c8dcce-2c5b-44f4-b546-08dab08812cc"),
+                        ProductId = new Guid("7fd9b7c2-f933-465b-ad95-08daaeef87c0"),
+                        Quantity = 15
+                    }
+                };
+            }
+        }
+
+        public static FridgeProductForCreationDto FridgeProductForCreation
+        {
+            get
+            {
+                return new FridgeProductForCreationDto
+                {
+                    Quantity = 23
+                };
+            }
+        }
+
         public static Guid ExistingFridgeModelId
         {
             get
