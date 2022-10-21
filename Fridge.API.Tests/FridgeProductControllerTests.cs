@@ -42,6 +42,9 @@ namespace Fridge.API.Tests
 
             _mockRepo.Setup(repo => repo.Products.GetProduct(It.IsAny<Guid>()))
                 .Returns<Guid>(guid => TestItems.Products.FirstOrDefault(p => p.Id == guid));
+
+            _mockRepo.Setup(repo => repo.FridgeProducts.GetFridgeProduct(It.IsAny<Guid>()))
+                .Returns<Guid>(guid => TestItems.FridgeProducts.FirstOrDefault(fp => fp.ProductId == guid));
         }
 
         [Fact]
@@ -138,37 +141,109 @@ namespace Fridge.API.Tests
         [Fact]
         public void DeleteFridgeProduct_NotExistingFridge_ReturnsNotFound()
         {
+            // Assign
+            var controller = new FridgeProductController(_mockRepo.Object, _mapper, _mockLogger.Object);
+            var notExistingFridgeId = TestItems.NotExistingFridgeId;
+            var existingProductId = TestItems.ExistingProductId;
 
+            // Act
+            var result = controller.DeleteFridgeProduct(notExistingFridgeId, existingProductId);
+
+            // Assert
+            Assert.IsType<NotFoundResult>(result);
         }
 
         [Fact]
         public void DeleteFridgeProduct_NotExistingFridgeProduct_ReturnsNotFound()
         {
+            // Assign
+            var controller = new FridgeProductController(_mockRepo.Object, _mapper, _mockLogger.Object);
+            var existingFridgeId = TestItems.ExistingFridgeId;
+            var notExistingProductId = TestItems.NotExistingProductId;
 
+            // Act
+            var result = controller.DeleteFridgeProduct(existingFridgeId, notExistingProductId);
+
+            // Assert
+            Assert.IsType<NotFoundResult>(result);
         }
 
         [Fact]
         public void DeleteFridgeProduct_ExistingFridgeProduct_ReturnsNoContent()
         {
+            // Assign
+            var controller = new FridgeProductController(_mockRepo.Object, _mapper, _mockLogger.Object);
+            var existingFridgeId = TestItems.ExistingFridgeId;
+            var existingProductId = TestItems.ExistingProductId;
 
+            // Act
+            var result = controller.DeleteFridgeProduct(existingFridgeId, existingProductId);
+
+            // Assert
+            Assert.IsType<NoContentResult>(result);
         }
 
         [Fact]
         public void UpdateFridgeProduct_NullFridgeProductForUpdate_ReturnsBadRequest()
         {
+            // Assign
+            var controller = new FridgeProductController(_mockRepo.Object, _mapper, _mockLogger.Object);
+            var existingFridgeProductId = TestItems.ExistingFridgeProductId;
+            var existingFridgeId = TestItems.ExistingFridgeId;
 
+            // Act
+            var result = controller.UpdateFridgeProduct(existingFridgeId, existingFridgeProductId, null);
+
+            // Assert
+            Assert.IsType<BadRequestObjectResult>(result);
+        }
+
+        [Fact]
+        public void UpdateFridgeProduct_NotExistingFridge_ReturnsNotFound()
+        {
+            // Assign
+            var controller = new FridgeProductController(_mockRepo.Object, _mapper, _mockLogger.Object);
+            var notExistingFridgeId = TestItems.NotExistingFridgeId;
+            var existingFridgeProductId = TestItems.ExistingFridgeProductId;
+            var existingProduct = TestItems.FridgeProductForUpdate;
+
+            // Act
+            var result = controller.UpdateFridgeProduct(notExistingFridgeId, existingFridgeProductId, existingProduct);
+
+            // Assert
+            Assert.IsType<NotFoundResult>(result);
         }
 
         [Fact]
         public void UpdateFridgeProduct_NotExistingFridgeProduct_ReturnsNotFound()
         {
+            // Assign
+            var controller = new FridgeProductController(_mockRepo.Object, _mapper, _mockLogger.Object);
+            var existingFridgeId = TestItems.NotExistingFridgeId;
+            var NotExistingFridgeProductId = TestItems.ExistingFridgeProductId;
+            var existingProduct = TestItems.FridgeProductForUpdate;
 
+            // Act
+            var result = controller.UpdateFridgeProduct(existingFridgeId, NotExistingFridgeProductId, existingProduct);
+
+            // Assert
+            Assert.IsType<NotFoundResult>(result);
         }
 
         [Fact]
         public void UpdateFridgeProduct_ExistingFridgeProduct_ReturnsNoContent()
         {
+            // Assign
+            var controller = new FridgeProductController(_mockRepo.Object, _mapper, _mockLogger.Object);
+            var existingFridgeId = TestItems.ExistingFridgeId;
+            var existingFridgeProductId = TestItems.ExistingFridgeProductId;
+            var existingProduct = TestItems.FridgeProductForUpdate;
 
+            // Act
+            var result = controller.UpdateFridgeProduct(existingFridgeId, existingFridgeProductId, existingProduct);
+
+            // Assert
+            Assert.IsType<NoContentResult>(result);
         }
     }
 }

@@ -92,13 +92,20 @@ namespace Fridge.API.Controllers
         }
 
         [HttpPut("{id}")]
-        public IActionResult UpdateFridgeProduct(Guid id, [FromBody]
+        public IActionResult UpdateFridgeProduct(Guid fridgeId, Guid id, [FromBody]
         FridgeProductForUpdateDto fridgeProduct)
         {
             if (fridgeProduct == null)
             {
                 _logger.LogError("FridgeProductForUpdateDto object sent from client is null.");
                 return BadRequest("FridgeProductForUpdateDto object is null");
+            }
+
+            var fridge = _repository.Fridges.GetFridge(fridgeId);
+            if (fridge == null)
+            {
+                _logger.LogError($"Fridge with id: {fridgeId} doesn't exist in the database.");
+                return NotFound();
             }
 
             var fridgeProductEntity = _repository.FridgeProducts.GetFridgeProduct(id);

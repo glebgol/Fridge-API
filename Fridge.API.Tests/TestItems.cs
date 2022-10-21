@@ -186,7 +186,7 @@ namespace Fridge.API.Tests
                     },
                     new FridgeProduct
                     {
-                        Id = new Guid("0f15d609-450c-46eb-626a-08dab06947d8"),
+                        Id = new Guid("46aad042-fa8d-49ea-b545-08dab08812cc"),
                         FridgeId = new Guid("dbfc4f30-8cc4-47e5-b543-08dab08812cc"),
                         ProductId= new Guid("f3a10026-5260-40ca-626b-08dab06947d8"),
                         Quantity = 2
@@ -213,6 +213,17 @@ namespace Fridge.API.Tests
             }
         }
 
+        public static FridgeProductForUpdateDto FridgeProductForUpdate
+        {
+            get
+            {
+                return new FridgeProductForUpdateDto
+                {
+                    Quantity = 23
+                };
+            }
+        }
+
         public static Guid ExistingFridgeModelId
         {
             get
@@ -233,7 +244,7 @@ namespace Fridge.API.Tests
         {
             get
             {
-                return new Guid("46aad042-fa8d-49ea-b545-08dab08812cc");
+                return new Guid("dbfc4f30-8cc4-47e5-b543-08dab08812cc");
             }
         }
 
@@ -258,6 +269,22 @@ namespace Fridge.API.Tests
             get
             {
                 return new Guid("7fd9b7c2-f933-465b-ad95-08daaeef87c0");
+            }
+        }
+
+        public static Guid ExistingFridgeProductId
+        {
+            get
+            {
+                return new Guid("7fd9b7c2-f933-465b-ad95-08daaeef87c0");
+            }
+        }
+
+        public static Guid NotExistingFridgeProductId
+        {
+            get
+            {
+                return new Guid("9fd7b7c2-f933-465b-ad95-08daaeef87c0");
             }
         }
     }
