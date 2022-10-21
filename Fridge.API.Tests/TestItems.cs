@@ -147,6 +147,30 @@ namespace Fridge.API.Tests
             }
         }
 
+        public static ProductForCreationDto ProductForCreation
+        {
+            get
+            {
+                return new ProductForCreationDto
+                {
+                    Name = "Eggs",
+                    DefaultQuantity = 10
+                };
+            }
+        }
+
+        public static ProductForUpdateDto ProductForUpdate
+        {
+            get
+            {
+                return new ProductForUpdateDto
+                {
+                    Name = "Eggs",
+                    DefaultQuantity = 10
+                };
+            }
+        }
+
         public static Guid ExistingFridgeModelId
         {
             get
@@ -176,6 +200,22 @@ namespace Fridge.API.Tests
             get
             {
                 return new Guid("55aad042-fa8d-49ea-b545-08dab08812cc");
+            }
+        }
+
+        public static Guid NotExistingProductId
+        {
+            get
+            {
+                return new Guid("8fd3b7c2-f663-465b-ad95-08daaeef87c0");
+            }
+        }
+
+        public static Guid ExistingProductId
+        {
+            get
+            {
+                return new Guid("7fd9b7c2-f933-465b-ad95-08daaeef87c0");
             }
         }
     }
