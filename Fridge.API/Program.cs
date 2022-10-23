@@ -3,6 +3,7 @@ using Entities;
 using Entities.Models;
 using LoggerService;
 using Microsoft.AspNetCore.Diagnostics;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using NLog;
 using Repository;
@@ -24,6 +25,10 @@ b => b.MigrationsAssembly("Fridge.API")));
 builder.Services.AddScoped<ILoggerManager, LoggerManager>();
 LogManager.LoadConfiguration(string.Concat(Directory.GetCurrentDirectory(), "/nlog.config"));
 
+builder.Services.Configure<ApiBehaviorOptions>(options =>
+{
+    options.SuppressModelStateInvalidFilter = true;
+});
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

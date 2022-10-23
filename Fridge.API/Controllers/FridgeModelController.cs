@@ -37,6 +37,13 @@ namespace Fridge.API.Controllers
                 _logger.LogError("FridgeModelForCreationDto object sent from client is null");
                 return BadRequest("FridgeModelForCreationDto object is null");
             }
+
+            if (!ModelState.IsValid)
+            {
+                _logger.LogError("Invalid model state for the FridgeModelForCreationDto object");
+                return UnprocessableEntity(ModelState);
+            }
+
             var modelEntity = _mapper.Map<FridgeModel>(model);
             _repository.FridgeModels.CreateFridgeModel(modelEntity);
             _repository.Save();

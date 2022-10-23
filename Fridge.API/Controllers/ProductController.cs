@@ -38,6 +38,12 @@ namespace Fridge.API.Controllers
                 return BadRequest("ProductForCreationDto object is null");
             }
 
+            if (!ModelState.IsValid)
+            {
+                _logger.LogError("Invalid model state for the ProductForCreationDto object");
+                return UnprocessableEntity(ModelState);
+            }
+
             var productEntity = _mapper.Map<Product>(product);
             _repository.Products.CreateProduct(productEntity);
             _repository.Save();

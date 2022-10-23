@@ -62,6 +62,12 @@ namespace Fridge.API.Controllers
                 return NotFound();
             }
 
+            if (!ModelState.IsValid)
+            {
+                _logger.LogError("Invalid model state for the FridgeForCreationDto object");
+                return UnprocessableEntity(ModelState);
+            }
+
             var fridgeEntity = _mapper.Map<Entities.Models.Fridge>(fridge);
 
             _repository.Fridges.CreateFridge(fridgeModelId, fridgeEntity);
