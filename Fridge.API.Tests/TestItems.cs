@@ -1,4 +1,5 @@
-﻿using Entities.DataTransferObjects;
+﻿using Entities.DataTransferObjects.DtoForCreation;
+using Entities.DataTransferObjects.DtoForUpdate;
 using Entities.Models;
 
 namespace Fridge.API.Tests

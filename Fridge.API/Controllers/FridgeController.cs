@@ -1,6 +1,8 @@
 ﻿using AutoMapper;
 using Contracts.Interfaces;
-using Entities.DataTransferObjects;
+using Entities.DataTransferObjects.Dto;
+using Entities.DataTransferObjects.DtoForCreation;
+using Entities.DataTransferObjects.DtoForUpdate;
 using Microsoft.AspNetCore.Mvc;
 
 
