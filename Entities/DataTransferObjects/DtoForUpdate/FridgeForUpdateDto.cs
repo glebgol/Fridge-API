@@ -1,8 +1,8 @@
-﻿namespace Entities.DataTransferObjects.DtoForUpdate
+﻿using Entities.DataTransferObjects.DtoForManipulation;
+
+namespace Entities.DataTransferObjects.DtoForUpdate
 {
-    public class FridgeForUpdateDto
+    public class FridgeForUpdateDto : FridgeForManipulationDto
     {
-        public string Name { get; set; }
-        public string? OwnerName { get; set; }
     }
 }

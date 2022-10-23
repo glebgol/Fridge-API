@@ -1,7 +1,8 @@
-﻿namespace Entities.DataTransferObjects.DtoForUpdate
+﻿using Entities.DataTransferObjects.DtoForManipulation;
+
+namespace Entities.DataTransferObjects.DtoForUpdate
 {
-    public class FridgeProductForUpdateDto
+    public class FridgeProductForUpdateDto : FridgeProductForManipulationDto
     {
-        public int Quantity { get; set; }
     }
 }

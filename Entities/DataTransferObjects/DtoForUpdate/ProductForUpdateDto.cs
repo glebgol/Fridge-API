@@ -1,8 +1,8 @@
-﻿namespace Entities.DataTransferObjects.DtoForUpdate
+﻿using Entities.DataTransferObjects.DtoForManipulation;
+
+namespace Entities.DataTransferObjects.DtoForUpdate
 {
-    public class ProductForUpdateDto
+    public class ProductForUpdateDto : ProductForManipulationDto
     {
-        public string Name { get; set; }
-        public int DefaultQuantity { get; set; }
     }
 }
