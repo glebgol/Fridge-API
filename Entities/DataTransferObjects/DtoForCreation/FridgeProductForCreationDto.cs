@@ -1,10 +1,8 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Entities.DataTransferObjects.DtoForManipulation;
 
 namespace Entities.DataTransferObjects.DtoForCreation
 {
-    public class FridgeProductForCreationDto
+    public class FridgeProductForCreationDto : FridgeProductForManipulationDto
     {
-        [Range(1, int.MaxValue, ErrorMessage = "Quantity is required and it can't be lower than 1")]
-        public int Quantity { get; set; }
     }
 }
