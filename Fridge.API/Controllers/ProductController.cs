@@ -78,6 +78,12 @@ namespace Fridge.API.Controllers
                 return BadRequest("ProductForUpdateDto object is null");
             }
 
+            if (!ModelState.IsValid)
+            {
+                _logger.LogError("Invalid model state for the ProductForUpdateDto object");
+                return UnprocessableEntity(ModelState);
+            }
+
             var productEntity = _repository.Products.GetProduct(id);
             if (productEntity == null)
             {
