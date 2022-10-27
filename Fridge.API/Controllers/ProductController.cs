@@ -26,12 +26,12 @@ namespace Fridge.API.Controllers
         [HttpGet]
         public IActionResult GetAllProducts()
         {
-            var products = _repository.Products.GetAllProducts;
+            var products = _repository.Products.GetAllProducts(false);
             var productsDto = _mapper.Map<ICollection<ProductDto>>(products);
             return Ok(productsDto);
         }
 
-        [HttpGet]
+        [HttpGet("{id}")]
         public IActionResult GetProductById(Guid id)
         {
             var product = _repository.Products.GetProduct(id);
