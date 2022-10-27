@@ -24,11 +24,25 @@ namespace Fridge.API.Controllers
         }
 
         [HttpGet]
-        public IActionResult GetAllProducts()
+        public IActionResult GetAllProducts(Guid id)
         {
-            var products = _repository.Products.GetAllProducts(trackChanges: false);
-            var productsDto = _mapper.Map<IEnumerable<ProductDto>>(products);
-            return Ok(productsDto);
+            var product = _repository.Products.GetProduct(id);
+            var productDto = _mapper.Map<ProductDto>(product);
+            return Ok(productDto);
+        }
+
+        [HttpGet]
+        public IActionResult GetProductById(Guid id)
+        {
+            var product = _repository.Products.GetProduct(id);
+
+            if (product == null)
+            {
+                _logger.LogInfo($"Product with id: {id} doesn't exist in the database.");
+                return NotFound();
+            }
+            var productDto = _mapper.Map<ProductDto>(product);
+            return Ok(productDto);
         }
 
         [HttpPost]
