@@ -3,6 +3,7 @@ using Contracts.Interfaces;
 using Entities.DataTransferObjects.Dto;
 using Entities.DataTransferObjects.DtoForCreation;
 using Entities.DataTransferObjects.DtoForUpdate;
+using Fridge.API.ActionFilters;
 using Microsoft.AspNetCore.Mvc;
 
 
@@ -48,27 +49,28 @@ namespace Fridge.API.Controllers
         }
 
         [HttpPost("{fridgeModelId}")]
+        [ServiceFilter(typeof(ValidationDtoFilterAttribute))]
         public async Task<IActionResult> PostFridge(Guid fridgeModelId, [FromBody] FridgeForCreationDto fridge)
         {
-            if (fridge == null)
-            {
-                _logger.LogError("FridgeForCreationDto object sent from client is null.");
-                return BadRequest("FridgeForCreationDto object is null");
-            }
+            //if (fridge == null)
+            //{
+            //    _logger.LogError("FridgeForCreationDto object sent from client is null.");
+            //    return BadRequest("FridgeForCreationDto object is null");
+            //}
 
             var fridgeModel = await _repository.FridgeModels.GetFridgeModelAsync(fridgeModelId);
 
-            if (fridgeModel == null)
-            {
-                _logger.LogInfo($"FridgeModel with id: {fridgeModelId} doesn't exist in the database.");
-                return NotFound();
-            }
+            //if (fridgeModel == null)
+            //{
+            //    _logger.LogInfo($"FridgeModel with id: {fridgeModelId} doesn't exist in the database.");
+            //    return NotFound();
+            //}
 
-            if (!ModelState.IsValid)
-            {
-                _logger.LogError("Invalid model state for the FridgeForCreationDto object");
-                return UnprocessableEntity(ModelState);
-            }
+            //if (!ModelState.IsValid)
+            //{
+            //    _logger.LogError("Invalid model state for the FridgeForCreationDto object");
+            //    return UnprocessableEntity(ModelState);
+            //}
 
             var fridgeEntity = _mapper.Map<Entities.Models.Fridge>(fridge);
 

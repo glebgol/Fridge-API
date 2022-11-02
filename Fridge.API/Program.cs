@@ -1,9 +1,11 @@
 using Contracts.Interfaces;
 using Entities;
 using Entities.Models;
+using Fridge.API.ActionFilters;
 using LoggerService;
 using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Filters;
 using Microsoft.EntityFrameworkCore;
 using NLog;
 using Repository;
@@ -12,6 +14,7 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
+builder.Services.AddScoped<IActionFilter, ValidationDtoFilterAttribute>();
 builder.Services.AddScoped<IRepositoryManager, RepositoryManager>();
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
