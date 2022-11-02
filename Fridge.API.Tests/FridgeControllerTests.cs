@@ -31,14 +31,14 @@ namespace Fridge.API.Tests
 
         private void SetUpMock()
         {
-            _mockRepo.Setup(repo => repo.Fridges.GetAllFridges(false))
-                .Returns(TestItems.Fridges);
+            _mockRepo.Setup(repo => repo.Fridges.GetAllFridgesAsync(false))
+                .Returns(Task.FromResult(TestItems.Fridges));
 
-            _mockRepo.Setup(repo => repo.Fridges.GetFridge(It.IsAny<Guid>()))
-                .Returns<Guid>(guid => TestItems.Fridges.FirstOrDefault(f => f.Id == guid));
+            _mockRepo.Setup(repo => repo.Fridges.GetFridgeAsync(It.IsAny<Guid>()))
+                .Returns<Guid>(guid => Task.FromResult(TestItems.Fridges.FirstOrDefault(f => f.Id == guid)));
 
-            _mockRepo.Setup(repo => repo.FridgeModels.GetFridgeModel(It.IsAny<Guid>()))
-                .Returns<Guid>(guid => TestItems.FridgeModels.FirstOrDefault(fm => fm.Id == guid));
+            _mockRepo.Setup(repo => repo.FridgeModels.GetFridgeModelAsync(It.IsAny<Guid>()))
+                .Returns<Guid>(guid => Task.FromResult(TestItems.FridgeModels.FirstOrDefault(fm => fm.Id == guid)));
 
             _mockRepo.Setup(repo => repo.Fridges.CreateFridge(It.IsAny<Guid>(), It.IsNotNull<Entities.Models.Fridge>()))
                 .Verifiable();
@@ -54,10 +54,10 @@ namespace Fridge.API.Tests
             var controller = new FridgeController(_mockRepo.Object, _mapper, _mockLogger.Object);
 
             // Act
-            var result = controller.GetAllFridges() as OkObjectResult;
+            var result = controller.GetAllFridges();
 
             // Assert
-            Assert.IsType<OkObjectResult>(result);
+            Assert.IsType<OkObjectResult>(result.Result);
         }
 
         [Fact]
@@ -71,7 +71,7 @@ namespace Fridge.API.Tests
             var result = controller.GetFridge(notExistingFridgeId);
 
             // Assert
-            Assert.IsType<NotFoundResult>(result);
+            Assert.IsType<NotFoundResult>(result.Result);
         }
 
         [Fact]
@@ -85,7 +85,7 @@ namespace Fridge.API.Tests
             var result = controller.GetFridge(existingFridgeId);
 
             // Assert
-            Assert.IsType<OkObjectResult>(result);
+            Assert.IsType<OkObjectResult>(result.Result);
         }
 
         [Fact]
@@ -99,7 +99,7 @@ namespace Fridge.API.Tests
             var result = controller.PostFridge(fridgeModelId, null);
 
             // Assert
-            Assert.IsType<BadRequestObjectResult>(result);
+            Assert.IsType<BadRequestObjectResult>(result.Result);
         }
 
         [Fact]
@@ -114,7 +114,7 @@ namespace Fridge.API.Tests
             var result = controller.PostFridge(fridgeModelId, fridgeForCreation);
 
             // Assert
-            Assert.IsType<NotFoundResult>(result);
+            Assert.IsType<NotFoundResult>(result.Result);
         }
 
         [Fact]
@@ -129,7 +129,7 @@ namespace Fridge.API.Tests
             var result = controller.PostFridge(fridgeModelId, fridgeForCreation);
 
             // Assert
-            Assert.IsType<CreatedAtRouteResult>(result);
+            Assert.IsType<CreatedAtRouteResult>(result.Result);
         }
 
         [Fact]
@@ -143,7 +143,7 @@ namespace Fridge.API.Tests
             var result = controller.DeleteFridge(notExistingFridgeId);
 
             // Assert
-            Assert.IsType<NotFoundResult>(result);
+            Assert.IsType<NotFoundResult>(result.Result);
         }
 
         [Fact]
@@ -157,7 +157,7 @@ namespace Fridge.API.Tests
             var result = controller.DeleteFridge(existingFridgeId);
 
             // Assert
-            Assert.IsType<NoContentResult>(result);
+            Assert.IsType<NoContentResult>(result.Result);
         }
 
         [Fact]
@@ -171,7 +171,7 @@ namespace Fridge.API.Tests
             var result = controller.UpdateFridge(id, null);
 
             // Assert
-            Assert.IsType<BadRequestObjectResult>(result);
+            Assert.IsType<BadRequestObjectResult>(result.Result);
         }
 
         [Fact]
@@ -186,7 +186,7 @@ namespace Fridge.API.Tests
             var result = controller.UpdateFridge(notExistingFridgeId, fridgeForUpdate);
 
             // Assert
-            Assert.IsType<NotFoundResult>(result);
+            Assert.IsType<NotFoundResult>(result.Result);
         }
 
         [Fact]
@@ -201,7 +201,7 @@ namespace Fridge.API.Tests
             var result = controller.UpdateFridge(existingFridgeId, fridgeForUpdate);
 
             // Assert
-            Assert.IsType<NoContentResult>(result);
+            Assert.IsType<NoContentResult>(result.Result);
         }
     }
 }

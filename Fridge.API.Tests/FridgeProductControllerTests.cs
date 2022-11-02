@@ -31,20 +31,20 @@ namespace Fridge.API.Tests
 
         private void SetUpMock()
         {
-            _mockRepo.Setup(repo => repo.Fridges.GetFridge(It.IsAny<Guid>()))
-                .Returns<Guid>(guid => TestItems.Fridges.FirstOrDefault(f => f.Id == guid));
+            _mockRepo.Setup(repo => repo.Fridges.GetFridgeAsync(It.IsAny<Guid>()))
+                .Returns<Guid>(guid => Task.FromResult(TestItems.Fridges.FirstOrDefault(f => f.Id == guid)));
 
-            _mockRepo.Setup(repo => repo.FridgeProducts.GetFridgeProducts(It.IsAny<Guid>(), It.IsAny<bool>()))
-                .Returns((Guid guid, bool b) => TestItems.FridgeProducts.Where(fp => fp.FridgeId == guid));
+            _mockRepo.Setup(repo => repo.FridgeProducts.GetFridgeProductsAsync(It.IsAny<Guid>(), It.IsAny<bool>()))
+                .Returns((Guid guid, bool b) => Task.FromResult(TestItems.FridgeProducts.Where(fp => fp.FridgeId == guid)));
 
-            _mockRepo.Setup(repo => repo.Fridges.GetFridge(It.IsAny<Guid>()))
-                .Returns<Guid>(guid => TestItems.Fridges.FirstOrDefault(f => f.Id == guid));
+            _mockRepo.Setup(repo => repo.Fridges.GetFridgeAsync(It.IsAny<Guid>()))
+                .Returns<Guid>(guid => Task.FromResult(TestItems.Fridges.FirstOrDefault(f => f.Id == guid)));
 
-            _mockRepo.Setup(repo => repo.Products.GetProduct(It.IsAny<Guid>()))
-                .Returns<Guid>(guid => TestItems.Products.FirstOrDefault(p => p.Id == guid));
+            _mockRepo.Setup(repo => repo.Products.GetProductAsync(It.IsAny<Guid>()))
+                .Returns<Guid>(guid => Task.FromResult(TestItems.Products.FirstOrDefault(p => p.Id == guid)));
 
-            _mockRepo.Setup(repo => repo.FridgeProducts.GetFridgeProduct(It.IsAny<Guid>()))
-                .Returns<Guid>(guid => TestItems.FridgeProducts.FirstOrDefault(fp => fp.ProductId == guid));
+            _mockRepo.Setup(repo => repo.FridgeProducts.GetFridgeProductAsync(It.IsAny<Guid>()))
+                .Returns<Guid>(guid => Task.FromResult(TestItems.FridgeProducts.FirstOrDefault(fp => fp.ProductId == guid)));
         }
 
         [Fact]
@@ -58,7 +58,7 @@ namespace Fridge.API.Tests
             var result = controller.GetFridgeProducts(notExistingFridgeId);
 
             // Assert
-            Assert.IsType<NotFoundResult>(result);
+            Assert.IsType<NotFoundResult>(result.Result);
         }
 
         [Fact]
@@ -72,7 +72,7 @@ namespace Fridge.API.Tests
             var result = controller.GetFridgeProducts(existingFridgeId);
 
             // Assert
-            Assert.IsType<OkObjectResult>(result);
+            Assert.IsType<OkObjectResult>(result.Result);
         }
 
         [Fact]
@@ -87,7 +87,7 @@ namespace Fridge.API.Tests
             var result = controller.CreateFridgeProduct(existingFridgeId, existingProductId, null);
 
             // Assert
-            Assert.IsType<BadRequestObjectResult>(result);
+            Assert.IsType<BadRequestObjectResult>(result.Result);
         }
 
         [Fact]
@@ -103,7 +103,7 @@ namespace Fridge.API.Tests
             var result = controller.CreateFridgeProduct(notExistingFridgeId, existingProductId, fridgeProductForCreation);
 
             // Assert
-            Assert.IsType<NotFoundObjectResult>(result);
+            Assert.IsType<NotFoundObjectResult>(result.Result);
         }
 
         [Fact]
@@ -119,7 +119,7 @@ namespace Fridge.API.Tests
             var result = controller.CreateFridgeProduct(existingFridgeId, notExistingProductId, fridgeProductForCreation);
 
             // Assert
-            Assert.IsType<NotFoundObjectResult>(result);
+            Assert.IsType<NotFoundObjectResult>(result.Result);
         }
 
         [Fact]
@@ -135,7 +135,7 @@ namespace Fridge.API.Tests
             var result = controller.CreateFridgeProduct(existingFridgeId, existingProductId, fridgeProductForCreation);
 
             // Assert
-            Assert.IsType<CreatedAtRouteResult>(result);
+            Assert.IsType<CreatedAtRouteResult>(result.Result);
         }
 
         [Fact]
@@ -150,7 +150,7 @@ namespace Fridge.API.Tests
             var result = controller.DeleteFridgeProduct(notExistingFridgeId, existingProductId);
 
             // Assert
-            Assert.IsType<NotFoundResult>(result);
+            Assert.IsType<NotFoundResult>(result.Result);
         }
 
         [Fact]
@@ -165,7 +165,7 @@ namespace Fridge.API.Tests
             var result = controller.DeleteFridgeProduct(existingFridgeId, notExistingProductId);
 
             // Assert
-            Assert.IsType<NotFoundResult>(result);
+            Assert.IsType<NotFoundResult>(result.Result);
         }
 
         [Fact]
@@ -180,7 +180,7 @@ namespace Fridge.API.Tests
             var result = controller.DeleteFridgeProduct(existingFridgeId, existingProductId);
 
             // Assert
-            Assert.IsType<NoContentResult>(result);
+            Assert.IsType<NoContentResult>(result.Result);
         }
 
         [Fact]
@@ -195,7 +195,7 @@ namespace Fridge.API.Tests
             var result = controller.UpdateFridgeProduct(existingFridgeId, existingFridgeProductId, null);
 
             // Assert
-            Assert.IsType<BadRequestObjectResult>(result);
+            Assert.IsType<BadRequestObjectResult>(result.Result);
         }
 
         [Fact]
@@ -211,7 +211,7 @@ namespace Fridge.API.Tests
             var result = controller.UpdateFridgeProduct(notExistingFridgeId, existingFridgeProductId, existingProduct);
 
             // Assert
-            Assert.IsType<NotFoundResult>(result);
+            Assert.IsType<NotFoundResult>(result.Result);
         }
 
         [Fact]
@@ -227,7 +227,7 @@ namespace Fridge.API.Tests
             var result = controller.UpdateFridgeProduct(existingFridgeId, NotExistingFridgeProductId, existingProduct);
 
             // Assert
-            Assert.IsType<NotFoundResult>(result);
+            Assert.IsType<NotFoundResult>(result.Result);
         }
 
         [Fact]
@@ -243,7 +243,7 @@ namespace Fridge.API.Tests
             var result = controller.UpdateFridgeProduct(existingFridgeId, existingFridgeProductId, existingProduct);
 
             // Assert
-            Assert.IsType<NoContentResult>(result);
+            Assert.IsType<NoContentResult>(result.Result);
         }
     }
 }

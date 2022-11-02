@@ -52,9 +52,9 @@ namespace Repository
             }
         }
 
-        public void SaveAsync()
+        public async Task SaveAsync()
         {
-            _repositoryContext.SaveChangesAsync();
+            await _repositoryContext.SaveChangesAsync();
         }
     }
 }

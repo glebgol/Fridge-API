@@ -38,8 +38,8 @@ namespace Fridge.API.Tests
             _mockRepo.Setup(repo => repo.FridgeModels.CreateFridgeModel(It.IsAny<FridgeModel>()))
                 .Verifiable();
 
-            _mockRepo.Setup(repo => repo.FridgeModels.GetFridgeModelAsync(It.IsAny<Guid>()).Result)
-                .Returns<Guid>(guid => TestItems.FridgeModels.FirstOrDefault(fm => fm.Id == guid));
+            _mockRepo.Setup(repo => repo.FridgeModels.GetFridgeModelAsync(It.IsAny<Guid>()))
+                .Returns<Guid>(guid => Task.FromResult(TestItems.FridgeModels.FirstOrDefault(fm => fm.Id == guid)));
         }
 
         [Fact]
@@ -52,7 +52,7 @@ namespace Fridge.API.Tests
             var result = controller.GetAllFridgeModels();
 
             // Assert
-            Assert.IsType<OkObjectResult>(result);
+            Assert.IsType<OkObjectResult>(result.Result);
         }
 
         [Fact]
@@ -65,7 +65,7 @@ namespace Fridge.API.Tests
             var result = controller.CreateFridgeModel(null);
 
             // Assert
-            Assert.IsType<BadRequestObjectResult>(result);
+            Assert.IsType<BadRequestObjectResult>(result.Result);
         }
 
         [Fact]
@@ -79,7 +79,7 @@ namespace Fridge.API.Tests
             var result = controller.CreateFridgeModel(model);
 
             // Assert
-            Assert.IsType<CreatedAtRouteResult>(result);
+            Assert.IsType<CreatedAtRouteResult>(result.Result);
         }
 
         [Fact]
@@ -93,7 +93,7 @@ namespace Fridge.API.Tests
             var result = controller.DeleteFridgeModel(notExistingFridgeModelId);
 
             // Assert
-            Assert.IsType<NotFoundResult>(result);
+            Assert.IsType<NotFoundResult>(result.Result);
         }
 
         [Fact]
@@ -107,7 +107,7 @@ namespace Fridge.API.Tests
             var result = controller.DeleteFridgeModel(existingFridgeModelId);
 
             // Assert
-            Assert.IsType<NoContentResult>(result);
+            Assert.IsType<NoContentResult>(result.Result);
         }
 
         [Fact]
@@ -121,7 +121,7 @@ namespace Fridge.API.Tests
             var result = controller.UpdateFridgeModel(existingFridgeModelId, null);
 
             // Assert
-            Assert.IsType<BadRequestObjectResult>(result);
+            Assert.IsType<BadRequestObjectResult>(result.Result);
         }
 
         [Fact]
@@ -136,7 +136,7 @@ namespace Fridge.API.Tests
             var result = controller.UpdateFridgeModel(notExistingFridgeModelId, fridgeModelForUpdate);
 
             // Assert
-            Assert.IsType<NotFoundResult>(result);
+            Assert.IsType<NotFoundResult>(result.Result);
         }
 
         [Fact]
@@ -151,9 +151,7 @@ namespace Fridge.API.Tests
             var result = controller.UpdateFridgeModel(existingFridgeModelId, fridgeModelForUpdate);
 
             // Assert
-            Assert.IsType<NoContentResult>(result);
+            Assert.IsType<NoContentResult>(result.Result);
         }
-
-
     }
 }
