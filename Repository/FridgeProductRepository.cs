@@ -1,6 +1,7 @@
 ﻿using Contracts.Interfaces;
 using Entities;
 using Entities.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace Repository
 {
@@ -22,14 +23,14 @@ namespace Repository
             Delete(fridgeProduct);
         }
 
-        public FridgeProduct GetFridgeProduct(Guid id)
+        public async Task<FridgeProduct> GetFridgeProductAsync(Guid id)
         {
-            return FindById(id);
+            return await FindByCondition(fp => fp.Id == id, false).FirstOrDefaultAsync();
         }
 
-        public IEnumerable<FridgeProduct> GetFridgeProducts(Guid fridgeId, bool trackChanges)
+        public async Task<IEnumerable<FridgeProduct>> GetFridgeProductsAsync(Guid fridgeId, bool trackChanges)
         {
-            return FindByCondition(fp => fp.FridgeId == fridgeId, trackChanges).ToList();
+            return await FindByCondition(fp => fp.FridgeId == fridgeId, trackChanges).ToListAsync();
         }
     }
 }

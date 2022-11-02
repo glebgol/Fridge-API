@@ -24,9 +24,9 @@ namespace Fridge.API.Controllers
         }
 
         [HttpGet]
-        public IActionResult GetFridgeProducts(Guid fridgeId)
+        public async Task<IActionResult> GetFridgeProducts(Guid fridgeId)
         {
-            var fridge = _repository.Fridges.GetFridge(fridgeId);
+            var fridge = await _repository.Fridges.GetFridgeAsync(fridgeId);
             if (fridge == null)
             {
                 _logger.LogInfo($"Fridge with id: {fridgeId} doesn't exist in the database.");
@@ -34,14 +34,14 @@ namespace Fridge.API.Controllers
             }
             else
             {
-                var products = _repository.FridgeProducts.GetFridgeProducts(fridgeId, trackChanges: false);
+                var products = await _repository.FridgeProducts.GetFridgeProductsAsync(fridgeId, trackChanges: false);
                 var productsDto = _mapper.Map<IEnumerable<FridgeProductDto>>(products);
                 return Ok(productsDto);
             }
         }
 
         [HttpPost("{productId}")]
-        public IActionResult CreateFridgeProduct(Guid fridgeId, Guid productId, [FromBody] FridgeProductForCreationDto fridgeProduct)
+        public async Task<IActionResult> CreateFridgeProduct(Guid fridgeId, Guid productId, [FromBody] FridgeProductForCreationDto fridgeProduct)
         {
             if (fridgeProduct == null)
             {
@@ -49,14 +49,14 @@ namespace Fridge.API.Controllers
                 return BadRequest("FridgeProductForCreationDto object is null");
             }
 
-            var fridge = _repository.Fridges.GetFridge(fridgeId);
+            var fridge = await _repository.Fridges.GetFridgeAsync(fridgeId);
             if (fridge == null)
             {
                 _logger.LogInfo($"Fridge with id: {fridgeId} doesn't exist in the database.");
                 return NotFound("Fridge");
             }
 
-            var product = _repository.Products.GetProduct(productId);
+            var product = await _repository.Products.GetProductAsync(productId);
             if (product == null)
             {
                 _logger.LogInfo($"Product with id: {productId} doesn't exist in the database.");
@@ -71,36 +71,36 @@ namespace Fridge.API.Controllers
 
             var fridgeProductEntity = _mapper.Map<FridgeProduct>(fridgeProduct);
             _repository.FridgeProducts.CreateFridgeProduct(fridgeId, productId, fridgeProductEntity);
-            _repository.Save();
+            await _repository.SaveAsync();
 
             var fridgeProductDto = _mapper.Map<FridgeProductDto>(fridgeProductEntity);
             return CreatedAtRoute(new { fridgeId, productId, fridgeProductDto.Id }, fridgeProductDto);
         }
 
         [HttpDelete("{id}")]
-        public IActionResult DeleteFridgeProduct(Guid fridgeId, Guid id)
+        public async Task<IActionResult> DeleteFridgeProduct(Guid fridgeId, Guid id)
         {
-            var fridge = _repository.Fridges.GetFridge(fridgeId);
+            var fridge = await _repository.Fridges.GetFridgeAsync(fridgeId);
             if (fridge == null)
             {
                 _logger.LogInfo($"Fridge with id: {id} doesn't exist in the database.");
                 return NotFound();
             }
 
-            var fridgeProduct = _repository.FridgeProducts.GetFridgeProduct(id);
+            var fridgeProduct = await _repository.FridgeProducts.GetFridgeProductAsync(id);
             if (fridgeProduct == null)
             {
                 _logger.LogInfo($"FridgeProduct with id: {id} doesn't exist in the database.");
                 return NotFound();
             }
             _repository.FridgeProducts.DeleteFridgeProduct(fridgeProduct);
-            _repository.Save();
+            await _repository.SaveAsync();
 
             return NoContent();
         }
 
         [HttpPut("{id}")]
-        public IActionResult UpdateFridgeProduct(Guid fridgeId, Guid id, [FromBody]
+        public async Task<IActionResult> UpdateFridgeProduct(Guid fridgeId, Guid id, [FromBody]
         FridgeProductForUpdateDto fridgeProduct)
         {
             if (fridgeProduct == null)
@@ -115,14 +115,14 @@ namespace Fridge.API.Controllers
                 return UnprocessableEntity(ModelState);
             }
 
-            var fridge = _repository.Fridges.GetFridge(fridgeId);
+            var fridge = await _repository.Fridges.GetFridgeAsync(fridgeId);
             if (fridge == null)
             {
                 _logger.LogError($"Fridge with id: {fridgeId} doesn't exist in the database.");
                 return NotFound();
             }
 
-            var fridgeProductEntity = _repository.FridgeProducts.GetFridgeProduct(id);
+            var fridgeProductEntity = await _repository.FridgeProducts.GetFridgeProductAsync(id);
             if (fridgeProductEntity == null)
             {
                 _logger.LogInfo($"FridgeProduct with id: {id} doesn't exist in the database.");
@@ -130,7 +130,7 @@ namespace Fridge.API.Controllers
             }
 
             _mapper.Map(fridgeProduct, fridgeProductEntity);
-            _repository.Save();
+            await _repository.SaveAsync();
             return NoContent();
         }
     }

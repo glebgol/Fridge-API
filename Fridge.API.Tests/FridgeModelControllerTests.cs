@@ -32,13 +32,13 @@ namespace Fridge.API.Tests
 
         private void SetUpMock()
         {
-            _mockRepo.Setup(repo => repo.FridgeModels.GetAllFridgeModels(false))
-                .Returns(TestItems.FridgeModels);
+            _mockRepo.Setup(repo => repo.FridgeModels.GetAllFridgeModelsAsync(false))
+                .Returns(Task.FromResult(TestItems.FridgeModels));
 
             _mockRepo.Setup(repo => repo.FridgeModels.CreateFridgeModel(It.IsAny<FridgeModel>()))
                 .Verifiable();
 
-            _mockRepo.Setup(repo => repo.FridgeModels.GetFridgeModel(It.IsAny<Guid>()))
+            _mockRepo.Setup(repo => repo.FridgeModels.GetFridgeModelAsync(It.IsAny<Guid>()).Result)
                 .Returns<Guid>(guid => TestItems.FridgeModels.FirstOrDefault(fm => fm.Id == guid));
         }
 

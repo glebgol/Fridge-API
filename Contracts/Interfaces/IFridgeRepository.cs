@@ -4,8 +4,8 @@ namespace Contracts.Interfaces
 {
     public interface IFridgeRepository
     {
-        IEnumerable<Fridge> GetAllFridges(bool trackChanges);
-        Fridge GetFridge(Guid id);
+        Task<IEnumerable<Fridge>> GetAllFridgesAsync(bool trackChanges);
+        Task<Fridge> GetFridgeAsync(Guid id);
         void CreateFridge(Guid fridgeModelId, Fridge fridge);
         void DeleteFridge(Fridge fridge);
     }

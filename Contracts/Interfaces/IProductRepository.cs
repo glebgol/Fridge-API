@@ -4,9 +4,9 @@ namespace Contracts.Interfaces
 {
     public interface IProductRepository
     {
-        IEnumerable<Product> GetAllProducts(bool trackChanges);
+        Task<IEnumerable<Product>> GetAllProductsAsync(bool trackChanges);
         void CreateProduct(Product product);
-        Product GetProduct(Guid id);
+        Task<Product> GetProductAsync(Guid id);
         void DeleteProduct(Product product);
     }
 }

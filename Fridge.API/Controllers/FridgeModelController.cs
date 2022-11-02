@@ -24,15 +24,15 @@ namespace Fridge.API.Controllers
         }
 
         [HttpGet]
-        public IActionResult GetAllFridgeModels()
+        public async Task<IActionResult> GetAllFridgeModels()
         {
-            var models = _repository.FridgeModels.GetAllFridgeModels(trackChanges: false);
+            var models = await _repository.FridgeModels.GetAllFridgeModelsAsync(trackChanges: false);
             var modelsDto = _mapper.Map<IEnumerable<FridgeModelDto>>(models);
             return Ok(modelsDto);
         }
 
         [HttpPost]
-        public IActionResult CreateFridgeModel([FromBody] FridgeModelForCreationDto model)
+        public async Task<IActionResult> CreateFridgeModel([FromBody] FridgeModelForCreationDto model)
         {
             if (model == null)
             {
@@ -48,29 +48,29 @@ namespace Fridge.API.Controllers
 
             var modelEntity = _mapper.Map<FridgeModel>(model);
             _repository.FridgeModels.CreateFridgeModel(modelEntity);
-            _repository.Save();
+            await _repository.SaveAsync();
 
             var modelToReturn = _mapper.Map<FridgeModelDto>(modelEntity);
             return CreatedAtRoute(new { id = modelToReturn.Id }, modelToReturn);
         }
 
         [HttpDelete("{id}")]
-        public IActionResult DeleteFridgeModel(Guid id)
+        public async Task<IActionResult> DeleteFridgeModel(Guid id)
         {
-            var fridgeModel = _repository.FridgeModels.GetFridgeModel(id);
+            var fridgeModel = await _repository.FridgeModels.GetFridgeModelAsync(id);
             if (fridgeModel == null)
             {
                 _logger.LogInfo($"FridgeModel with id: {id} doesn't exist in the database.");
                 return NotFound();
             }
             _repository.FridgeModels.DeleteFridgeModel(fridgeModel);
-            _repository.Save();
+            await _repository.SaveAsync();
 
             return NoContent();
         }
 
         [HttpPut("{id}")]
-        public IActionResult UpdateFridgeModel(Guid id, [FromBody]
+        public async Task<IActionResult> UpdateFridgeModel(Guid id, [FromBody]
         FridgeModelForUpdateDto fridgeModel)
         {
             if (fridgeModel == null)
@@ -85,7 +85,7 @@ namespace Fridge.API.Controllers
                 return UnprocessableEntity(ModelState);
             }
 
-            var fridgeModelEntity = _repository.FridgeModels.GetFridgeModel(id);
+            var fridgeModelEntity = await _repository.FridgeModels.GetFridgeModelAsync(id);
             if (fridgeModelEntity == null)
             {
                 _logger.LogInfo($"FridgeModel with id: {id} doesn't exist in the database.");
@@ -93,7 +93,7 @@ namespace Fridge.API.Controllers
             }
 
             _mapper.Map(fridgeModel, fridgeModelEntity);
-            _repository.Save();
+            await _repository.SaveAsync();
             return NoContent();
         }
     }

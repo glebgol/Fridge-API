@@ -24,17 +24,17 @@ namespace Fridge.API.Controllers
         }
 
         [HttpGet]
-        public IActionResult GetAllProducts()
+        public async Task<IActionResult> GetAllProducts()
         {
-            var products = _repository.Products.GetAllProducts(false);
+            var products = await _repository.Products.GetAllProductsAsync(false);
             var productsDto = _mapper.Map<ICollection<ProductDto>>(products);
             return Ok(productsDto);
         }
 
         [HttpGet("{id}")]
-        public IActionResult GetProductById(Guid id)
+        public async Task<IActionResult> GetProductById(Guid id)
         {
-            var product = _repository.Products.GetProduct(id);
+            var product = await _repository.Products.GetProductAsync(id);
 
             if (product == null)
             {
@@ -46,7 +46,7 @@ namespace Fridge.API.Controllers
         }
 
         [HttpPost]
-        public IActionResult PostProduct([FromBody] ProductForCreationDto product)
+        public async Task<IActionResult> PostProduct([FromBody] ProductForCreationDto product)
         {
             if (product == null)
             {
@@ -62,28 +62,28 @@ namespace Fridge.API.Controllers
 
             var productEntity = _mapper.Map<Product>(product);
             _repository.Products.CreateProduct(productEntity);
-            _repository.Save();
+            await _repository.SaveAsync();
             var productDto = _mapper.Map<ProductDto>(productEntity);
             return CreatedAtRoute(new { id = productDto.Id }, productDto);
         }
 
         [HttpDelete("{id}")]
-        public IActionResult DeleteProduct(Guid id)
+        public async Task<IActionResult> DeleteProduct(Guid id)
         {
-            var product = _repository.Products.GetProduct(id);
+            var product = await _repository.Products.GetProductAsync(id);
             if (product == null)
             {
                 _logger.LogInfo($"Product with id: {id} doesn't exist in the database.");
                 return NotFound();
             }
             _repository.Products.DeleteProduct(product);
-            _repository.Save();
+            await _repository.SaveAsync();
 
             return NoContent();
         }
 
         [HttpPut("{id}")]
-        public IActionResult UpdateProduct(Guid id, [FromBody]
+        public async Task<IActionResult> UpdateProduct(Guid id, [FromBody]
         ProductForUpdateDto product)
         {
             if (product == null)
@@ -98,7 +98,7 @@ namespace Fridge.API.Controllers
                 return UnprocessableEntity(ModelState);
             }
 
-            var productEntity = _repository.Products.GetProduct(id);
+            var productEntity = await _repository.Products.GetProductAsync(id);
             if (productEntity == null)
             {
                 _logger.LogInfo($"Product with id: {id} doesn't exist in the database.");
@@ -106,7 +106,7 @@ namespace Fridge.API.Controllers
             }
 
             _mapper.Map(product, productEntity);
-            _repository.Save();
+            await _repository.SaveAsync();
             return NoContent();
         }
     }
