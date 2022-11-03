@@ -2,7 +2,10 @@
 using Contracts.Interfaces;
 using Fridge.API.AutoMapperProfile;
 using Fridge.API.Controllers;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Abstractions;
+using Microsoft.AspNetCore.Mvc.Filters;
 using Moq;
 
 namespace Fridge.API.Tests
@@ -166,6 +169,21 @@ namespace Fridge.API.Tests
             // Assign
             var controller = new FridgeController(_mockRepo.Object, _mapper, _mockLogger.Object);
             var id = TestItems.ExistingFridgeId;
+
+            // Create a default ActionContext (depending on our case-scenario)
+            var actionContext = new ActionContext()
+            {
+                HttpContext = new DefaultHttpContext(),
+                ActionDescriptor = new ActionDescriptor()
+            };
+
+            // Create the filter input parameters (depending on our case-scenario)
+            var resultExecutingContext = new ResultExecutingContext(
+                actionContext,
+                    new List<IFilterMetadata>(),
+                    new ObjectResult("A dummy result from the action method."),
+                    Mock.Of<Controller>()
+                );
 
             // Act
             var result = controller.UpdateFridge(id, null);

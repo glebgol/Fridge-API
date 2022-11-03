@@ -31,6 +31,14 @@ namespace Fridge.API.Controllers
             return Ok(modelsDto);
         }
 
+        [HttpGet("{id}")]
+        public async Task<IActionResult> GetFridgeModel(Guid id)
+        {
+            var model = await _repository.FridgeModels.GetFridgeModelAsync(id);
+            var modelsDto = _mapper.Map<FridgeModelDto>(model);
+            return Ok(modelsDto);
+        }
+
         [HttpPost]
         public async Task<IActionResult> CreateFridgeModel([FromBody] FridgeModelForCreationDto model)
         {
